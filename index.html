@@ -1,0 +1,3460 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stomatologiya Quiz - 30 talik bloklar</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0 22px;
+        }
+
+        .hidden { display: none; }
+
+        /* Home Page - Bloklar */
+        .grid-blocks {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .block-btn {
+            padding: 24px 16px;
+            font-size: 1.08rem;
+            font-weight: bold;
+            line-height: 1.35;
+            border: 1px solid #c7d2fe;
+            background: #f5f7ff;
+            color: #1d3b8b;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+        }
+
+        .block-btn:hover {
+            background: #4f8df4;
+            border-color: #3b82f6;
+            color: #ffffff;
+        }
+
+        /* Quiz UI */
+        .question-text { font-size: 1.2rem; font-weight: 600; margin: 0 auto 20px; max-width: 96%; }
+        .options-list { display: grid; gap: 10px; max-width: 96%; margin: 0 auto; }
+        .option-item {
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-item:hover { border-color: var(--primary); background-color: #eff6ff; }
+        .option-item.selected { background: var(--primary); color: white; border-color: var(--primary); }
+        .option-item.correct { background: #16a34a; color: white; border-color: #16a34a; }
+        .option-item.wrong { background: #dc2626; color: white; border-color: #dc2626; }
+        .option-item.dimmed { opacity: 0.45; }
+
+        .footer { margin-top: 25px; display: flex; justify-content: space-between; align-items: center; }
+        .quiz-finish-row { margin-top: 72px; justify-content: flex-end; }
+        .quiz-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .score-live { display: flex; gap: 12px; font-weight: 600; font-size: 0.95rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+        #progress-text { font-size: 0.95rem; font-weight: 700; display: inline-flex; align-items: center; gap: 1px; white-space: nowrap; position: absolute; right: 0; top: 0; }
+        .progress-bracket { font-size: 1.15rem; line-height: 1; }
+        .stat-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        .stat-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            font-weight: 700;
+        }
+        .icon-correct { background: var(--success); }
+        .icon-wrong { background: var(--danger); }
+        
+        button.btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-next { background: var(--primary); color: white; }
+        .btn-home { background: #64748b; color: white; }
+        .btn-finish { background: var(--danger); color: white; }
+        .btn-block { background: #0ea5e9; color: white; }
+
+        /* Result UI */
+        .result-card { text-align: center; padding: 8px 0 4px; }
+        .result-title { margin: 0 0 8px; font-size: 1.6rem; color: #0f172a; }
+        .score { font-size: 3rem; color: var(--primary); font-weight: 800; }
+        .result-line {
+            margin: 8px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #334155;
+        }
+        .result-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .grid-blocks {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .block-btn {
+                padding: 18px 12px;
+                font-size: 0.98rem;
+            }
+
+            .score-live {
+                width: 100%;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .stat-chip {
+                padding: 4px 7px;
+            }
+
+            .question-text {
+                font-size: 1.05rem;
+                line-height: 1.45;
+            }
+
+            .option-item {
+                padding: 11px;
+                font-size: 0.95rem;
+            }
+
+            .footer {
+                margin-top: 16px;
+            }
+
+            .quiz-finish-row {
+                margin-top: 46px;
+            }
+
+            .result-actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+
+            .grid-blocks {
+                gap: 8px;
+            }
+
+            .block-btn {
+                padding: 14px 8px;
+                font-size: 0.9rem;
+                border-radius: 12px;
+            }
+
+            .score-live {
+                gap: 6px;
+            }
+
+            .stat-chip {
+                padding: 3px 6px;
+                font-size: 0.88rem;
+            }
+
+            #progress-text {
+                font-size: 0.88rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-shell">
+<div class="container">
+    <div id="home-screen">
+        <h2 style="text-align:center">Test Blokini Tanlang</h2>
+        <p style="text-align:center; color: #64748b;">Har bir blokda 30 tadan savol mavjud</p>
+        <div class="grid-blocks" id="blocks-container">
+            </div>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+        <div class="quiz-top">
+            <span id="block-title" style="font-weight: bold; color: var(--primary);">1-blok</span>
+            <div class="score-live">
+                <span class="stat-chip">
+                    <span class="stat-icon icon-correct">✓</span>
+                    <span>To'g'ri:</span>
+                    <span id="correct-count">0</span>
+                </span>
+                <span class="stat-chip">
+                    <span class="stat-icon icon-wrong">x</span>
+                    <span>Xato:</span>
+                    <span id="wrong-count">0</span>
+                </span>
+            </div>
+            <span id="progress-text"><span class="progress-bracket">[</span><span id="progress-value">1/30</span><span class="progress-bracket">]</span></span>
+        </div>
+        <div class="question-text" id="question-body">Savol matni shu yerda chiqadi?</div>
+        <div class="options-list" id="options-body"></div>
+        <div class="footer quiz-finish-row">
+            <button class="btn btn-finish" onclick="finishQuiz()">Tugatish</button>
+        </div>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <div class="result-card">
+            <h2 class="result-title">Natija</h2>
+            <div class="score" id="final-score">0</div>
+            <p class="result-line" id="result-stats">Javob berilgan: 0/30</p>
+            <p class="result-line" id="result-correct">To'g'ri: 0</p>
+            <p class="result-line" id="result-wrong">Xato: 0</p>
+            <div class="result-actions">
+                <button class="btn btn-next" onclick="restartQuiz()">Qayta topshirish</button>
+                <button class="btn btn-block" onclick="startNextBlock()">Keyingi blok</button>
+                <button class="btn btn-home" onclick="goHome()">Bosh sahifa</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    const QUESTIONS_PER_BLOCK = 30;
+
+
+    const allTests = [
+    {
+        "id": 1,
+        "question": "Кумуш сақловчи ажратувчи таглик пломба ашёси нима сабабдан фронтал ва премоляр тишлар пломбаси остидан қўлланилмайди?",
+        "options": [
+            "Доимий пломба рангини ўзгартиради",
+            "Тез тушиб кетади",
+            "Тиш рангини ўзгартирмайди",
+            "Антигенлик хусусияти кучли"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 2,
+        "question": "Ажратувчи таглик пломба ашёси берилган қаторни топинг",
+        "options": [
+            "Фосфатцемент, рух эвгенолцемент, дентин паста",
+            "Калмецин, сунъий дентин",
+            "Фосфатцемент, висфат цемент, уницем, фужи",
+            "Мегасеф, резодент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 3,
+        "question": "Ажратувчи таглик пломба ашёси тиш тўқимасига қандай таъсир кўрсатади?",
+        "options": [
+            "Доимий пломба ашёси токсик таъсиридан ҳимоя қилади",
+            "Яллиғланишга қарши",
+            "Иккиламчи дентин ҳосил қилади",
+            "Оғриқсизлантирувчи"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 4,
+        "question": "Силикат асосли пломба ашёси турлари кўрсатилган қаторни белгиланг",
+        "options": [
+            "Силицин, белацин",
+            "Беладонт, силидонт",
+            "Эподент, акрилоксид",
+            "Унифас, адгезор"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 5,
+        "question": "Силико фосфат цементининг қотиш давомийлигини кўрсатинг",
+        "options": [
+            "5–6 дақиқа",
+            "3–4 соат",
+            "10–15 дақиқа",
+            "2 соат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 6,
+        "question": "“Беладонт” пломба ашёси қайси давлатда ва фирмасида ишлаб чиқарилган?",
+        "options": [
+            "Россия “Владмива”",
+            "Киев “Стом”",
+            "Россия “Стомалюкс”",
+            "Германия “Харизма”"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 7,
+        "question": "“Беладонт” пломбасини ишлатишда оптимал шароит неча градусни ташкил этади?",
+        "options": [
+            "18–22°C",
+            "25–28°C",
+            "16–18°C",
+            "22–24°C"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 8,
+        "question": "Силико фосфат цементининг тўлиқ қотиш муддатини кўрсатинг",
+        "options": [
+            "2–3 соат",
+            "5–6 дақиқа",
+            "2–3 дақиқа",
+            "1,5 соат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 9,
+        "question": "Нур билан қотувчи композит пломба ашёлари қайси талабларга жавоб бериши керак?",
+        "options": [
+            "Юқоридаги барча талабларга жавоб бериши керак",
+            "Эстетик жиҳатдан тиш рангига мос бўлиши",
+            "Чуқурлиги 2 мм дан кам бўлмаслиги",
+            "Механик жиҳатдан пишиқ ва мустаҳкам бўлиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 10,
+        "question": "Нур билан қотувчи пломбанинг асосий хусусиятларини белгиланг",
+        "options": [
+            "Юқоридаги барча талабларга жавоб бериши керак",
+            "Юқори мустаҳкамлик",
+            "Оғиз суюқлигига эримаслиги",
+            "Термик кенгайиш коэффициенти тишга тенг бўлиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 11,
+        "question": "Композит ашёси қўлланилиш кўрсатмасига биноан неча гуруҳга бўлинади?",
+        "options": [
+            "6",
+            "4",
+            "2",
+            "5"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 12,
+        "question": "Нур билан қотувчи пломба турлари берилган қаторни кўрсатинг",
+        "options": [
+            "Geliolux, Filtek, Charizma",
+            "Силидонт, Белладонт",
+            "Цемион",
+            "Фуджи 1"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 13,
+        "question": "Ҳозирги пайтларда чет эл фирмалари қайси композитларини чиқара бошлади?",
+        "options": [
+            "Нано композитлар",
+            "Эгилувчан композитлар",
+            "Оқувчан композитлар",
+            "Кимёвий композитлар"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 14,
+        "question": "Оқувчан композит ашёси қайси мақсадларда қўлланилади?",
+        "options": [
+            "1,2,3,5 синф ковакларни пломбалашда",
+            "1,2 синф",
+            "2,4 синф",
+            "4,5 синф"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 15,
+        "question": "Зичлаштирилган композит ашёси нима мақсадда фойдаланилади?",
+        "options": [
+            "Моляр ва премоляр тишларни пломбалашда",
+            "3,4 синф ковакларда",
+            "1,2 синф ковакларда",
+            "Чайнов тишларни эстетик пломбалашда"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 16,
+        "question": "Нур билан қотувчи композит ашёсининг травитил таркибини (%) кўрсатинг",
+        "options": [
+            "36–37% ортофосфат кислота",
+            "Хлорид кислота 0,5%",
+            "Ортофосфат кислота 17%",
+            "Сульфат кислота 0,2%"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 17,
+        "question": "Нур билан қотувчи композит ашёси травитили вазифасини белгиланг",
+        "options": [
+            "Тиш қаттиқ тўқимасида микропоралар ҳосил қилиш",
+            "Дентин каналчаларини очиш",
+            "Сезувчанликни камайтириш",
+            "Каналчаларни бекитиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 18,
+        "question": "Нур билан қотувчи композит ашёсининг бонд системаси вазифаси",
+        "options": [
+            "Пломбани тиш қаттиқ тўқимасига ёпиштириш",
+            "Микропора ҳосил қилиш",
+            "Рангни таъминлаш",
+            "Пародонтни мустаҳкамлаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 19,
+        "question": "Кимёвий қотувчи композитлар таркиби",
+        "options": [
+            "2 та паста (базис ва катализатор)",
+            "Кукун, суюқлик",
+            "Мономер паста",
+            "Мономер, каталитик паста"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 20,
+        "question": "Даволовчи таглик асосий хусусияти",
+        "options": [
+            "Одонтотроп, иккиламчи дентин ҳосил қилиш",
+            "Оғриқсизлантирувчи",
+            "Пульпани ҳимоя қилиш",
+            "Қоплама фиксациясида"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 21,
+        "question": "Даволовчи таглик турлари",
+        "options": [
+            "Кальмецин, кальцин-паста",
+            "Лак, сунъий дентин",
+            "Эподент",
+            "Акрил пастаси"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 22,
+        "question": "Даволовчи тагликлар қўлланилади",
+        "options": [
+            "Чуқур кариес",
+            "Юза кариес",
+            "Ўрта кариес",
+            "Доғ кариес"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 23,
+        "question": "Электр стационар бор машина айланиш тезлиги",
+        "options": [
+            "30 000",
+            "100 000",
+            "300 000",
+            "10 000"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 24,
+        "question": "Дала ва қишлоқ шароитида мўлжалланган бор машина",
+        "options": [
+            "Пневматик",
+            "Турбинали",
+            "Электрик",
+            "Комбинациялашган"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 25,
+        "question": "Комбинациялашган бор машинаси ишлаш механизми",
+        "options": [
+            "Оёқ педалида наконечник ишга тушади",
+            "Ҳаво босими",
+            "Иссиқлик манбаи",
+            "Тўғри жавоб йўқ"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 26,
+        "question": "Турбинали бор машина билан ишлаганда оғирлик",
+        "options": [
+            "15–20 гр",
+            "80 гр",
+            "50 гр",
+            "5 гр"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 27,
+        "question": "Турбинали бор машинасида қайси борлар ишлатилади",
+        "options": [
+            "Алмаз борлар",
+            "Қаттиқ пулат",
+            "Никель хром",
+            "Никель титан"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 28,
+        "question": "Пневматик бор машина турбинаси массаси",
+        "options": [
+            "22 кг",
+            "55 кг",
+            "17 кг",
+            "5 кг"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 29,
+        "question": "Турбинали бор машинанинг ҳаво босимини ўлчагич",
+        "options": [
+            "Манометр",
+            "Дозиметр",
+            "Психометр",
+            "Термометр"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 30,
+        "question": "Ёритиш тизимли электр бор машина қисмлари",
+        "options": [
+            "Корпус, электромотор, ёритгич, вентилятор, сулак туфлагич, тезлик бошқарувчи тугма",
+            "Монитор, негатоскоп",
+            "Ёритгич, компрессор",
+            "Фақат тугма"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 31,
+        "question": "Тиш қаттиқ тўқимасини чархлаш қайси асбобларда бажарилади?",
+        "options": [
+            "Борлар, махсус дисклар, фрезлар, финир",
+            "Зонд, гладилка, пинцет",
+            "Экскаватор, файллар",
+            "Борлар, кесувчи дисклар, файллар"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 32,
+        "question": "Шарсимон борлар қайси ҳолларда қўлланилади?",
+        "options": [
+            "Кариоз ковакни очишда",
+            "Канал тулдиришда",
+            "Пломба қоришда",
+            "Некроэктомияда"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 33,
+        "question": "Цилиндрик борнинг вазифаси",
+        "options": [
+            "Кариоз ковакни очиш ва кенгайтириш",
+            "Депульпацияда",
+            "Канал тулдиришда",
+            "Қарашларни тозалашда"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 34,
+        "question": "Пломбани силлиқловчи асбоблар",
+        "options": [
+            "Резинали мосламалар, карборунд тошлар",
+            "Металли фрезлар",
+            "Конусли борлар",
+            "Олмосли борлар"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 35,
+        "question": "Пломба ашёсини пардозловчи асбоблар",
+        "options": [
+            "Финир, полир",
+            "Шарсимон бор",
+            "Цилиндр бор",
+            "Конусли бор"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 36,
+        "question": "Нур билан қотувчи пломбалар қайси борларда пардозланади?",
+        "options": [
+            "Олмосли борларда",
+            "Шарсимон фрез",
+            "Конусли бор",
+            "Карборунд диск"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 37,
+        "question": "Кариоз ковакни очиш ва кенгайтирувчи борлар",
+        "options": [
+            "Цилиндрик, конусли",
+            "Тескари конус, шарсимон",
+            "Шарсимон финир",
+            "Полир"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 38,
+        "question": "Некроэктомия учун бор",
+        "options": [
+            "Шарсимон бор",
+            "Полир",
+            "Конуссимон",
+            "Цилиндрик"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 39,
+        "question": "Пломбага ишлов берувчи бор",
+        "options": [
+            "Финир бори",
+            "Шарсимон",
+            "Конус",
+            "Карборунд"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 40,
+        "question": "Бирламчи кўрик асбоблари",
+        "options": [
+            "Зонд, пинцет, ойна",
+            "Пинцет, шпател",
+            "Экскаватор",
+            "Ойна, гладилка"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 41,
+        "question": "Оғиз шиллиқ қаватини текшириш асбоблари",
+        "options": [
+            "Зонд, ойна, пинцет, шпател",
+            "Элеватор",
+            "Экскаватор",
+            "Гладилка"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 42,
+        "question": "Тишларни пломбалашда ишлатилади",
+        "options": [
+            "Шпател, штопфер, гладилка",
+            "Зонд, пинцет",
+            "Экскаватор",
+            "Файл"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 43,
+        "question": "Контакт юзада матрица турлари",
+        "options": [
+            "Целлуоидли, металли",
+            "Резинали",
+            "Шиша",
+            "Пахтали"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 44,
+        "question": "Матрица қайси синфда ишлатилади?",
+        "options": [
+            "2 синф",
+            "1-2",
+            "4",
+            "5"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 45,
+        "question": "Металли ва целлуоид матрицалар қайси синфларда?",
+        "options": [
+            "2,3 синф",
+            "1-2",
+            "3-4",
+            "1-4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 46,
+        "question": "Парадонтал чўнтак текшириш асбоби",
+        "options": [
+            "Учи тумток зонд",
+            "Ўткир зонд",
+            "Пинцет",
+            "Экскаватор"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 47,
+        "question": "Пластмасса шпателда қорилади",
+        "options": [
+            "Кимёвий композитлар",
+            "Амальгама",
+            "Силикат цемент",
+            "Фосфат цемент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 48,
+        "question": "Тиш тошини олувчи аппарат",
+        "options": [
+            "Скайлер",
+            "Электрофорез",
+            "Алмаз бор",
+            "Фиссура бор"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 49,
+        "question": "Амальгамма қайси синфда",
+        "options": [
+            "1–2 класс",
+            "2–4",
+            "3–5",
+            "5"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 50,
+        "question": "Фронтал тишларда қўлланилмайди",
+        "options": [
+            "Амальгама",
+            "Силикат цемент",
+            "Композит",
+            "Пластмасса"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 51,
+        "question": "Вақтинча пломба ашёси",
+        "options": [
+            "Дентин паста темпора",
+            "Диафас",
+            "Силидонт",
+            "Уницем"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 52,
+        "question": "Фтор ажратувчи пломба",
+        "options": [
+            "Шишаиономер цемент",
+            "Пластмасса",
+            "Силико-фосфат",
+            "Композит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 53,
+        "question": "Шиша иономер таркиби",
+        "options": [
+            "Полиакрил кислота, шиша",
+            "Ортофосфат кислота",
+            "Калций оксиди",
+            "Платина"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 54,
+        "question": "Канал пломбалашда қаттиқ материал",
+        "options": [
+            "Штифт",
+            "Унифас",
+            "Эндометазон",
+            "Резодент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 55,
+        "question": "Пломбага пардоз бериш асбоблари",
+        "options": [
+            "Дисклар, фреза",
+            "Шпател",
+            "Скалер",
+            "Рашпил"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 56,
+        "question": "Юқори 7 тиш",
+        "options": [
+            "3 та илдиз, 3 канал",
+            "2 канал",
+            "1 канал",
+            "2 илдиз"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 57,
+        "question": "Канал киришини кенгайтириш",
+        "options": [
+            "Шарсимон бор",
+            "Пульпа экстрактор",
+            "Пинцет",
+            "Зонд"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 58,
+        "question": "Пастки 1-премоляр илдиз сони",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 59,
+        "question": "Қўшимча стоматологик мослама майдони",
+        "options": [
+            "14 м²",
+            "10",
+            "21",
+            "6"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 60,
+        "question": "Кариес бу:",
+        "options": [
+            "Тиш қаттиқ тўқималарининг деминерализацияси натижасида нуқсон ҳосил бўлиши",
+            "Эмал емирилиши",
+            "Пулпа яллиғланиши",
+            "Периодонт жараёни"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 61,
+        "question": "Силико-фосфатларга киради:",
+        "options": [
+            "Силидонт, Беладонт",
+            "Компалайт, Харизма",
+            "Адгезор, Висцин",
+            "Амальгама, штифт"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 62,
+        "question": "Некроэктомия ўтказилади:",
+        "options": [
+            "Шарсимон бор ва экскаватор билан",
+            "Тескари конус бор",
+            "Фиссур бор",
+            "Конуссимон бор"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 63,
+        "question": "Металл шпател билан қорилади:",
+        "options": [
+            "Цемент асосидаги пломба ашёлари",
+            "Эвикрол",
+            "Компалайт",
+            "Лателюкс"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 64,
+        "question": "Канал учун қотмайдиган пломба ашёси:",
+        "options": [
+            "Мойли пломбалар",
+            "Гуттаперча",
+            "Цемент",
+            "Пластмасса"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 65,
+        "question": "Дайрек – бу:",
+        "options": [
+            "Фиссур герметик",
+            "Компомер",
+            "Микрогибрид",
+            "Цемент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 66,
+        "question": "Турбинали дастага эга бор машина:",
+        "options": [
+            "Хирана",
+            "УС-30",
+            "БЭС-10",
+            "БК-1"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 67,
+        "question": "Резорцин-формалин усули камчилиги:",
+        "options": [
+            "Тишни пушти ранга киритади",
+            "Пулпа яллиғланади",
+            "Пулпа некроз",
+            "Каналга яхши киради"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 68,
+        "question": "Пастки жаг иккинчи моляри илдиз номи:",
+        "options": [
+            "Дистал, медиал",
+            "Танглай, лунж",
+            "Лунж, тил",
+            "Танглай, медиал"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 69,
+        "question": "Илдиз каналлари учун пластик қотмайдиган ашё:",
+        "options": [
+            "Ёғ асосли антисептик воситалар",
+            "Резорцин-формалин паста",
+            "Кумуш штифт",
+            "Штифт"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 70,
+        "question": "Реставрацияга қарши абсолют кўрсатма:",
+        "options": [
+            "Пломба компонентларига аллергик реакция",
+            "Тиш емирилиши",
+            "Нотўғри прикус",
+            "Бруксизм"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 71,
+        "question": "Тўғри дастак бор ҳажми:",
+        "options": [
+            "2.2–2.7 см",
+            "4.6 см",
+            "1.7–2.2 см",
+            "3.2–3.6 см"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 72,
+        "question": "Лайнер қўллаш кўрсатмаси:",
+        "options": [
+            "Пульпани токсик таъсирловчилардан ажратиш",
+            "Термик",
+            "Химик",
+            "Фиксация"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 73,
+        "question": "Бормашина дастаклари:",
+        "options": [
+            "Оддий ва мураккаб",
+            "Юмшоқ",
+            "Металл",
+            "Қуйма"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 74,
+        "question": "Даволовчи тагликка киради:",
+        "options": [
+            "Кальцикур, Калцимол",
+            "Виноксол",
+            "Фосфат цемент",
+            "Дентин паста"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 75,
+        "question": "Юқори марказий курак канал сони:",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 76,
+        "question": "Пахта валик стерилизацияси:",
+        "options": [
+            "Автоклавда",
+            "Қайнатиш",
+            "Қуруқ ҳаво",
+            "Вазелин"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 77,
+        "question": "Асосий текшириш усули:",
+        "options": [
+            "Бемор кўриги",
+            "Электроодонтодиагностика",
+            "Цитология",
+            "Биохимия"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 78,
+        "question": "Қўшимча текшириш усули:",
+        "options": [
+            "Электроодонтодиагностика",
+            "Перкуссия",
+            "Зондлаш",
+            "Кўрик"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 79,
+        "question": "Нур билан кариес ташхиси:",
+        "options": [
+            "Люминесцент диагностика",
+            "Электроодонтодиагностика",
+            "Термометрия",
+            "Эхография"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 80,
+        "question": "Электрқўзғалувчанликни аниқлаш:",
+        "options": [
+            "Электроодонтодиагностика",
+            "Рентген",
+            "Цитология",
+            "Биохимия"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 81,
+        "question": "Юқори ён курак канал сони:",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 82,
+        "question": "Юқори қозиқ тиш канал сони:",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 83,
+        "question": "Юқори биринчи премоляр канал сони:",
+        "options": [
+            "2",
+            "1",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 84,
+        "question": "Пастки премоляр илдиз сони:",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 85,
+        "question": "16, 26 тишларда илдиз ва канал:",
+        "options": [
+            "3 та илдиз, 3 та канал",
+            "3 илдиз, 2 канал",
+            "4 илдиз",
+            "2 илдиз"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 86,
+        "question": "37, 47 тишларда илдиз ва канал:",
+        "options": [
+            "2 та илдиз, 3 та канал",
+            "3 илдиз",
+            "2 илдиз, 2 канал",
+            "1 илдиз"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 87,
+        "question": "Асосли таглик пломба қалинлиги қанча?",
+        "options": [
+            "1 мм дан кўп бўлади",
+            "0,4 мм",
+            "0,3 мм",
+            "0,2 мм"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 88,
+        "question": "Юпқа қаватли таглик пломба қалинлиги қанча?",
+        "options": [
+            "0,5 мм",
+            "2 мм",
+            "3 мм",
+            "4 мм"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 89,
+        "question": "Силико–фосфатли цемент таркибида неча % силикат бор?",
+        "options": [
+            "80 %",
+            "73 %",
+            "60 %",
+            "55 %"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 90,
+        "question": "Рух–фосфатли цемент таркибида неча % рух оксид бор?",
+        "options": [
+            "80–83 %",
+            "6–10 %",
+            "20 %",
+            "10–40 %"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 91,
+        "question": "Амальгама неча °C да қотади?",
+        "options": [
+            "37°C",
+            "40°C",
+            "41°C",
+            "45°C"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 92,
+        "question": "Блек бўйича кариоз ковак неча турга бўлинади?",
+        "options": [
+            "5",
+            "3",
+            "6",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 93,
+        "question": "Нур билан қотувчи пломбанинг асосий моддаси:",
+        "options": [
+            "Камфорхинон",
+            "Алин",
+            "Перокс бензоил",
+            "Олигоэфиран"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 94,
+        "question": "Амалгамалар қайси синф кариоз ковагида қўлланилади?",
+        "options": [
+            "1,2,5",
+            "1,3,4",
+            "4,5",
+            "1,2,3"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 95,
+        "question": "Вақтинча пломба ашёларига киради:",
+        "options": [
+            "Дентин, дентин паста",
+            "Диофас цемент",
+            "Силицин",
+            "Уницем"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 96,
+        "question": "Қайси пломба ашёси узоқ муддат фтор ажратади?",
+        "options": [
+            "Шиша иономер цемент (СИЦ)",
+            "Пластмасса",
+            "Силико-фосфат",
+            "Композит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 97,
+        "question": "Шиша иономер пломба ашёсининг таркиби:",
+        "options": [
+            "Полиакрил кислота, шиша кукуни",
+            "Ортофосфат кислота",
+            "Кальций оксид",
+            "Платина ион"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 98,
+        "question": "Пломбага пардоз беришда қўлланиладиган асбоблар:",
+        "options": [
+            "Дисклар, фрезерлар",
+            "Шпател",
+            "Штопфер",
+            "Рашпил"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 99,
+        "question": "Тиш тошларини олиш учун мўлжалланган асбоб:",
+        "options": [
+            "Скаллер",
+            "Экскаватор",
+            "Шпател",
+            "Штопфер"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 100,
+        "question": "Иккиламчи цемент қаерда жойлашган?",
+        "options": [
+            "Илдиз учки қисмида",
+            "Милкда",
+            "Эмал остида",
+            "Периодонт атрофида"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 101,
+        "question": "Композит пломба ашёлар таснифи нимасига қараб тузилган?",
+        "options": [
+            "Заррачанинг ҳажмига қараб",
+            "Рангига",
+            "Мустаҳкамлигига",
+            "Адгезиясига"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 102,
+        "question": "Олдинги тишларни пломбалаш учун асосан ишлатилади:",
+        "options": [
+            "Силикат цемент",
+            "Рух-фосфат",
+            "Фосфат цемент",
+            "Амальгама"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 103,
+        "question": "Силикат цемент қайси синф ковакларда ишлатилади?",
+        "options": [
+            "3–4 синф",
+            "1–2",
+            "1–4",
+            "2–3"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 104,
+        "question": "Қайси цемент рентгенконтраст хусусиятга эга?",
+        "options": [
+            "Шиша иономер",
+            "Силикат",
+            "Силико-фосфат",
+            "Рух-фосфат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 105,
+        "question": "“Фужи 1” қайси турга киради?",
+        "options": [
+            "Шиша иономер цемент",
+            "Силикат",
+            "Фосфат",
+            "Композит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 106,
+        "question": "Юқори курак тишларда илдизлар сони:",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 107,
+        "question": "Пастки курак тишларда илдизлар сони:",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 108,
+        "question": "Пастки моляр тишларда илдизлар сони:",
+        "options": [
+            "2",
+            "3",
+            "4",
+            "1"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 109,
+        "question": "Юқори моляр тишларда илдизлар сони:",
+        "options": [
+            "3",
+            "2",
+            "1",
+            "4"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 110,
+        "question": "Қандай пломба ашёси симоб билан совуқ металл қотишмасидан иборат?",
+        "options": [
+            "Амальгама",
+            "Композит",
+            "Цемент",
+            "Силикат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 111,
+        "question": "Кальций гидроксид тутувчи даволовчи таглик:",
+        "options": [
+            "Калсоген Плюс",
+            "Дентин",
+            "Ледермех",
+            "Зиномент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 112,
+        "question": "Фақат адгезия ҳисобига ёпишувчи пломба ашёси:",
+        "options": [
+            "Композит",
+            "Шиша иономер",
+            "Силикат",
+            "Амальгама"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 113,
+        "question": "Бир креслога стоматологик хонанинг оптимал майдони:",
+        "options": [
+            "14 м²",
+            "7 м²",
+            "9 м²",
+            "12 м²"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 114,
+        "question": "Амальгаманинг ижобий хусусияти:",
+        "options": [
+            "Пластиклиги",
+            "Кучли иссиқлик ўтказувчанлик",
+            "Киришиш",
+            "Ёмон ёпишиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 115,
+        "question": "Симобсиз амалгама:",
+        "options": [
+            "Галлодент-М",
+            "Кумуш",
+            "Мис",
+            "Композит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 116,
+        "question": "УС-30 бор машинаси айланиш тезлиги:",
+        "options": [
+            "10–30 минг айл/мин",
+            "1000–3000",
+            "30000–60000",
+            "2000–8000"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 117,
+        "question": "Турбинали бор машина айланиш тезлиги:",
+        "options": [
+            "300–600 минг",
+            "200–400",
+            "100–500",
+            "600–700"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 118,
+        "question": "Кариоз ковакларни синфларга бўлган олим:",
+        "options": [
+            "Блек",
+            "Боровский",
+            "Морган",
+            "Бабухин"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 119,
+        "question": "Чархлашда ишлатиладиган асбоблар:",
+        "options": [
+            "Алмаз бор, тескари конус бор",
+            "Зонд",
+            "Шпател",
+            "Пинцет"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 120,
+        "question": "Гладилка нима учун керак?",
+        "options": [
+            "Пломба ашёсини киритиш ва шакл бериш учун",
+            "Тиш қимирлашини аниқлаш",
+            "Тиш тозалаш",
+            "Юмшаган дентинни олиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 121,
+        "question": "Экскаватор қандай асбоб?",
+        "options": [
+            "Юмшаган дентинни олиш учун",
+            "Пломба зичлаш учун",
+            "Милкни кесиш учун",
+            "Тишни қимирлатиш учун"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 122,
+        "question": "Зонд нима учун ишлатилади?",
+        "options": [
+            "Кариоз ковакни текшириш учун",
+            "Пломба зичлаш",
+            "Тиш суғуриш",
+            "Милк кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 123,
+        "question": "Пинцет стоматологияда нима учун керак?",
+        "options": [
+            "Тампон ушлаш учун",
+            "Пломба қўйиш",
+            "Тиш суғуриш",
+            "Илдиз кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 124,
+        "question": "Чуқур кариесда қайси таглик қўйилади?",
+        "options": [
+            "Даволовчи таглик",
+            "Вақтинча пломба",
+            "Амальгама",
+            "Силикат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 125,
+        "question": "Кальций гидроксидли тагликнинг асосий вазифаси:",
+        "options": [
+            "Иккиламчи дентин ҳосил қилиш",
+            "Тишни оқартириш",
+            "Ранг бериш",
+            "Мустахкамлаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 126,
+        "question": "Рух-эвгенол цемент хусусияти:",
+        "options": [
+            "Тинчлантирувчи таъсирга эга",
+            "Oqartiradi",
+            "Фтор ажратади",
+            "Металл таркибли"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 127,
+        "question": "Композит пломба қотиши қандай амалга ошади?",
+        "options": [
+            "Нур таъсирида полимеризация",
+            "Сув таъсирида",
+            "Ҳавода",
+            "Иссиқликда"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 128,
+        "question": "Адгезив система нима учун керак?",
+        "options": [
+            "Композитни тишга ёпиштириш учун",
+            "Oqartirish",
+            "Oqartirmaslik",
+            "Ранг бериш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 129,
+        "question": "Протравка учун қайси кислота ишлатилади?",
+        "options": [
+            "Ортофосфор кислота (37%)",
+            "Азот кислота",
+            "Сульфат кислота",
+            "Сут кислота"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 130,
+        "question": "Эмални протравка қилиш вақти:",
+        "options": [
+            "15–30 сония",
+            "1 дақиқа",
+            "5 дақиқа",
+            "2 дақиқа"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 131,
+        "question": "Дентинни протравка қилиш вақти:",
+        "options": [
+            "10–15 сония",
+            "1 дақиқа",
+            "5 сония",
+            "2 дақиқа"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 132,
+        "question": "Матрица нима учун қўлланилади?",
+        "options": [
+            "Пломба шаклини тиклаш учун",
+            "Тиш суғуриш",
+            "Милк кесиш",
+            "Илдиз очиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 133,
+        "question": "Клин нима вазифа бажаради?",
+        "options": [
+            "Матрицани маҳкамлаш",
+            "Тиш суғуриш",
+            "Пломба аралаштириш",
+            "Милк кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 134,
+        "question": "Амальгама асосий камчилиги:",
+        "options": [
+            "Эстетик эмас",
+            "Мустахкам",
+            "Арзон",
+            "Пластик"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 135,
+        "question": "Композитнинг афзаллиги:",
+        "options": [
+            "Эстетиклиги юқори",
+            "Металл таркибли",
+            "Қора рангли",
+            "Иссиқлик ўтказади"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 136,
+        "question": "Силикат цементнинг камчилиги:",
+        "options": [
+            "Мўртлиги юқори",
+            "Эстетик",
+            "Фтор ажратади",
+            "Адгезияли"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 137,
+        "question": "Шиша иономер цементнинг афзаллиги:",
+        "options": [
+            "Фтор ажратади ва адгезияси бор",
+            "Металл",
+            "Қора ранг",
+            "Мўрт"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 138,
+        "question": "Кариеснинг бошланғич босқичи:",
+        "options": [
+            "Доғ босқичи",
+            "Чуқур кариес",
+            "Ўрта кариес",
+            "Пульпит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 139,
+        "question": "Ўрта кариесда зарарланади:",
+        "options": [
+            "Эмал ва дентиннинг бир қисми",
+            "Фақат эмал",
+            "Пульпа",
+            "Илдиз"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 140,
+        "question": "Чуқур кариесда хавф остида бўлади:",
+        "options": [
+            "Пульпа",
+            "Милк",
+            "Эмал",
+            "Цемент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 141,
+        "question": "Пульпит нима?",
+        "options": [
+            "Пульпанинг яллиғланиши",
+            "Милк яллиғланиши",
+            "Эмал яллиғланиши",
+            "Илдиз резорбцияси"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 142,
+        "question": "Периодонтит нима?",
+        "options": [
+            "Периодонт яллиғланиши",
+            "Пульпит",
+            "Кариес",
+            "Эрозия"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 143,
+        "question": "Кариес профилактикасида асосий омил:",
+        "options": [
+            "Фторлаш",
+            "Амальгама",
+            "Oqartириш",
+            "Силикат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 144,
+        "question": "Фиссура герметизацияси нима учун?",
+        "options": [
+            "Кариеснинг олдини олиш учун",
+            "Тиш суғуриш",
+            "Oqartириш",
+            "Илдиз очиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 145,
+        "question": "Тиш тўқимасининг энг қаттиқ қисми:",
+        "options": [
+            "Эмал",
+            "Дентин",
+            "Пульпа",
+            "Цемент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 146,
+        "question": "Дентин таркиби неча % органик моддадан иборат?",
+        "options": [
+            "20 %",
+            "5 %",
+            "50 %",
+            "70 %"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 147,
+        "question": "Эмал таркиби неча % ноорганик модда?",
+        "options": [
+            "96 %",
+            "70 %",
+            "50 %",
+            "30 %"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 148,
+        "question": "Пульпа таркиби:",
+        "options": [
+            "Қон томир ва нервлар",
+            "Фақат нерв",
+            "Фақат қон",
+            "Эмал"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 149,
+        "question": "Цемент нима вазифа бажаради?",
+        "options": [
+            "Илдизни периодонтга бириктиради",
+            "Oqartириш",
+            "Ранг бериш",
+            "Қаттиқлаштириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 150,
+        "question": "Илдиз канали пломбировкасининг асосий мақсади:",
+        "options": [
+            "Герметик ёпиш",
+            "Oqartириш",
+            "Ранг бериш",
+            "Мустахкамлаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 151,
+        "question": "Гуттаперча нима учун ишлатилади?",
+        "options": [
+            "Илдиз каналини пломбировкалаш",
+            "Oqartириш",
+            "Эмал тузатиш",
+            "Милк кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 152,
+        "question": "Резорцин-формалин усули камчилиги:",
+        "options": [
+            "Тишни пушти рангга киритади",
+            "Oqartирмайди",
+            "Oqartиради",
+            "Фтор ажратади"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 153,
+        "question": "Вақтинча пломба неча кун қўйилади?",
+        "options": [
+            "3–14 кун",
+            "1 соат",
+            "1 ой",
+            "6 ой"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 154,
+        "question": "Тиш тозалашда ишлатиладиган паста тури:",
+        "options": [
+            "Абразив паста",
+            "Амальгама",
+            "Силикат",
+            "Композит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 155,
+        "question": "Профессионал тиш тозалаш асбоби:",
+        "options": [
+            "УЗИ-скаллер",
+            "Зонд",
+            "Пинцет",
+            "Шпател"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 156,
+        "question": "Антисептик эритма:",
+        "options": [
+            "Хлоргексидин",
+            "Сув",
+            "Спирт",
+            "Йод"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 157,
+        "question": "Ог‘iz бўшлиғини чайиш воситаси:",
+        "options": [
+            "Антисептик эритма",
+            "Амальгама",
+            "Композит",
+            "Цемент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 158,
+        "question": "Тиш гиперестезияси нима?",
+        "options": [
+            "Сезувчанлик ошиши",
+            "Кариес",
+            "Пульпит",
+            "Периодонтит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 159,
+        "question": "Oqartириш (Bleaching) нима учун?",
+        "options": [
+            "Тиш рангини очиш учун",
+            "Кариес даволаш",
+            "Пульпит даволаш",
+            "Илдиз кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 160,
+        "question": "Oqartиришда асосий модда:",
+        "options": [
+            "Водород пероксид",
+            "Кальций",
+            "Рух",
+            "Фтор"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 161,
+        "question": "Стерилизация нима?",
+        "options": [
+            "Микробларни йўқ қилиш",
+            "Oqartириш",
+            "Ювиш",
+            "Қуритиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 162,
+        "question": "Автоклавда стерилизация ҳарорати:",
+        "options": [
+            "120–134°C",
+            "50°C",
+            "70°C",
+            "200°C"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 163,
+        "question": "Асептика нима?",
+        "options": [
+            "Инфекцияни олдини олиш чоралари",
+            "Даволаш",
+            "Oqartириш",
+            "Қуритиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 164,
+        "question": "Антисептика нима?",
+        "options": [
+            "Микробларга қарши курашиш",
+            "Oqartириш",
+            "Ювиш",
+            "Қуритиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 165,
+        "question": "Тиш суғуриш асбоби:",
+        "options": [
+            "Қисқич (щипцы)",
+            "Зонд",
+            "Шпател",
+            "Скаллер"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 166,
+        "question": "Люксатор нима учун?",
+        "options": [
+            "Тишни бўшатиш учун",
+            "Пломба қўйиш",
+            "Oqartириш",
+            "Милк кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 167,
+        "question": "Қон тўхтатиш воситаси:",
+        "options": [
+            "Гемостатик губка",
+            "Композит",
+            "Амальгама",
+            "Силикат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 168,
+        "question": "Анестезия тури:",
+        "options": [
+            "Инфильтрацион ва проводниковая",
+            "Oqartириш",
+            "Фторлаш",
+            "Герметизация"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 169,
+        "question": "Лидокаин нима?",
+        "options": [
+            "Маҳаллий анестетик",
+            "Антисептик",
+            "Композит",
+            "Цемент"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 170,
+        "question": "Тиш пломбировкасида асосий мақсад:",
+        "options": [
+            "Ковакни герметик тиклаш",
+            "Oqartириш",
+            "Ранг бериш",
+            "Қуритиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 171,
+        "question": "Кариеснинг асосий сабаби:",
+        "options": [
+            "Микроорганизмлар таъсири",
+            "Совуқ ҳаво",
+            "Механик шикаст",
+            "Ирсий омил"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 172,
+        "question": "Кариес ривожланишида асосий омил:",
+        "options": [
+            "Тиш бляшкаси",
+            "Тиш шакли",
+            "Милк ҳолати",
+            "Ранг"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 173,
+        "question": "Тиш бляшкаси таркиби:",
+        "options": [
+            "Бактериялар ва озуқа қолдиқлари",
+            "Фақат озуқа",
+            "Фақат шиллиқ",
+            "Фақат минерал"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 174,
+        "question": "Кариес профилактикаси усули:",
+        "options": [
+            "Фторлаш",
+            "Амальгама",
+            "Oqartириш",
+            "Илдиз кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 175,
+        "question": "Кариес диагностика усули:",
+        "options": [
+            "Зондлаш ва кўрик",
+            "Фақат рентген",
+            "Oqartириш",
+            "Пломбалаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 176,
+        "question": "Рентген нима учун керак?",
+        "options": [
+            "Яширин кариесни аниқлаш",
+            "Oqartириш",
+            "Милк кесиш",
+            "Пломба зичлаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 177,
+        "question": "Ўткир пульпит белгиси:",
+        "options": [
+            "Кучли, тунги оғриқ",
+            "Симптомсиз",
+            "Фақат совуқда",
+            "Қон кетиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 178,
+        "question": "Хроник пульпит белгиси:",
+        "options": [
+            "Суст оғриқ",
+            "Кучли тунги оғриқ",
+            "Қон кетиш",
+            "Симптомсиз"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 179,
+        "question": "Периодонтитда асосий белги:",
+        "options": [
+            "Тиш босганда оғриқ",
+            "Oqartириш",
+            "Ранг ўзгариши",
+            "Эмал ёрилиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 180,
+        "question": "Илдиз канали ишлов бериш босқичи:",
+        "options": [
+            "Механик ва медикаментоз ишлов",
+            "Oqartириш",
+            "Пломба қўйиш",
+            "Милк кесиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 181,
+        "question": "Канал ювиш учун эритма:",
+        "options": [
+            "Натрий гипохлорит",
+            "Спирт",
+            "Сув",
+            "Йод"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 182,
+        "question": "Канал ишлов бериш асбоби:",
+        "options": [
+            "Файл (K-file)",
+            "Зонд",
+            "Шпател",
+            "Скаллер"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 183,
+        "question": "Канал узунлигини аниқлаш усули:",
+        "options": [
+            "Апекслокатор ва рентген",
+            "Кўрик",
+            "Пальпация",
+            "Перкуссия"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 184,
+        "question": "Перкуссия нима?",
+        "options": [
+            "Тишни енгил уриш орқали текшириш",
+            "Ювиш",
+            "Oqartириш",
+            "Пломбалаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 185,
+        "question": "Пальпация нима?",
+        "options": [
+            "Қўл билан текшириш",
+            "Рентген",
+            "Ювиш",
+            "Oqartириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 186,
+        "question": "Тиш эрозияси нима?",
+        "options": [
+            "Эмалнинг кимёвий емирилиши",
+            "Кариес",
+            "Пульпит",
+            "Периодонтит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 187,
+        "question": "Абразия нима?",
+        "options": [
+            "Механик емирилиш",
+            "Кариес",
+            "Яллиғланиш",
+            "Инфекция"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 188,
+        "question": "Флюороз сабаби:",
+        "options": [
+            "Ортиқча фтор",
+            "Кальций",
+            "Рух",
+            "Магний"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 189,
+        "question": "Гипоплазия нима?",
+        "options": [
+            "Эмал ривожланиш нуқсони",
+            "Пульпит",
+            "Кариес",
+            "Периодонтит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 190,
+        "question": "Тиш ранг ўзгариши сабаби:",
+        "options": [
+            "Некроз ёки дори таъсири",
+            "Фторлаш",
+            "Герметизация",
+            "Полировка"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 191,
+        "question": "Композит полировка асбоби:",
+        "options": [
+            "Резина диск ва щётка",
+            "Зонд",
+            "Экскаватор",
+            "Скаллер"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 192,
+        "question": "Тиш сезувчанлигини камайтириш усули:",
+        "options": [
+            "Десенситайзер қўллаш",
+            "Амальгама",
+            "Рентген",
+            "Скаллер"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 193,
+        "question": "Фиссура герметиги таркиби:",
+        "options": [
+            "Композит смола",
+            "Амальгама",
+            "Силикат",
+            "Фосфат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 194,
+        "question": "Болалар стоматологиясида қўлланилади:",
+        "options": [
+            "Шиша иономер цемент",
+            "Амальгама",
+            "Металл",
+            "Силикат"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 195,
+        "question": "Вақтинча тишларда илдиз сони:",
+        "options": [
+            "Доимийга нисбатан кўпроқ ёйилган",
+            "Кам",
+            "Йўқ",
+            "Бир хил"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 196,
+        "question": "Пломба қўйишда изоляция усули:",
+        "options": [
+            "Коффердам",
+            "Зонд",
+            "Пинцет",
+            "Экскаватор"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 197,
+        "question": "Коффердам вазифаси:",
+        "options": [
+            "Тишни намликдан ҳимоя қилиш",
+            "Oqartириш",
+            "Милк кесиш",
+            "Қуритиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 198,
+        "question": "Милк яллиғланиши:",
+        "options": [
+            "Гингивит",
+            "Пульпит",
+            "Кариес",
+            "Эрозия"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 199,
+        "question": "Пародонтит нима?",
+        "options": [
+            "Пародонт тўқималарининг яллиғланиши",
+            "Кариес",
+            "Пульпит",
+            "Эрозия"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 200,
+        "question": "Тиш ҳаракатчанлиги сабаби:",
+        "options": [
+            "Пародонтит",
+            "Кариес",
+            "Фторлаш",
+            "Герметизация"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 201,
+        "question": "Тиш тоши нимадан ҳосил бўлади?",
+        "options": [
+            "Минераллашган бляшка",
+            "Фақат шиллиқ",
+            "Сув",
+            "Спирт"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 202,
+        "question": "Тишни профессионал оқартириш усули:",
+        "options": [
+            "Кабинет bleaching",
+            "Амальгама",
+            "Герметизация",
+            "Фторлаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 203,
+        "question": "Тиш нервини олиш операцияси:",
+        "options": [
+            "Девитализация",
+            "Герметизация",
+            "Полировка",
+            "Фторлаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 204,
+        "question": "Девитал паста таркиби:",
+        "options": [
+            "Параформальдегид ёки мышьякли модда",
+            "Кальций",
+            "Фтор",
+            "Магний"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 205,
+        "question": "Маҳаллий анестезия асорати:",
+        "options": [
+            "Аллергик реакция",
+            "Oqartириш",
+            "Кариес",
+            "Полировка"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 206,
+        "question": "Стоматологик ойна вазифаси:",
+        "options": [
+            "Кўришни яхшилаш ва ёритиш",
+            "Пломба қўйиш",
+            "Милк кесиш",
+            "Тиш суғуриш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 207,
+        "question": "Тишларни санаш тизими:",
+        "options": [
+            "FDI (икки рақамли)",
+            "Бир рақамли",
+            "Уч рақамли",
+            "Тўрт ҳарфли"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 208,
+        "question": "11 рақами қайси тиш?",
+        "options": [
+            "Юқори ўнг марказий кесувчи",
+            "Пастки чап",
+            "Юқори чап моляр",
+            "Пастки ўнг моляр"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 209,
+        "question": "36 рақами қайси тиш?",
+        "options": [
+            "Пастки чап биринчи моляр",
+            "Юқори ўнг",
+            "Пастки ўнг",
+            "Юқори чап кесувчи"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 210,
+        "question": "21 рақами қайси тиш?",
+        "options": [
+            "Юқори чап марказий кесувчи",
+            "Пастки чап",
+            "Юқори ўнг моляр",
+            "Пастки ўнг кесувчи"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 211,
+        "question": "Тиш формуласи катталарда:",
+        "options": [
+            "32 тиш",
+            "28",
+            "20",
+            "24"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 212,
+        "question": "Болаларда тиш сони:",
+        "options": [
+            "20 та сут тиши",
+            "28",
+            "32",
+            "24"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 213,
+        "question": "Сут тишлар чиқиш даври:",
+        "options": [
+            "6 ойдан бошланади",
+            "3 ёш",
+            "5 ёш",
+            "10 ёш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 214,
+        "question": "Доимий тишлар чиқиши:",
+        "options": [
+            "6 ёшдан бошланади",
+            "1 ёш",
+            "3 ёш",
+            "15 ёш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 215,
+        "question": "Ақл тишлари чиқиши:",
+        "options": [
+            "17–25 ёш",
+            "6 ёш",
+            "10 ёш",
+            "12 ёш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 216,
+        "question": "Тиш импланти нима?",
+        "options": [
+            "Сунъий илдиз",
+            "Пломба",
+            "Силикат",
+            "Амальгама"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 217,
+        "question": "Протез тури:",
+        "options": [
+            "Олинадиган ва олинмайдиган",
+            "Фақат олинадиган",
+            "Фақат олинмайдиган",
+            "Йўқ"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 218,
+        "question": "Коронка нима?",
+        "options": [
+            "Тишнинг сунъий қопламаси",
+            "Пломба",
+            "Илдиз",
+            "Милк"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 219,
+        "question": "Мост нима?",
+        "options": [
+            "Йўқотилган тиш ўрнини тўлдирувчи конструкция",
+            "Пломба",
+            "Герметик",
+            "Фторлак"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 220,
+        "question": "Стоматологияда асосий мақсад:",
+        "options": [
+            "Тиш ва оғиз соғлигини сақлаш",
+            "Фақат пломба қўйиш",
+            "Фақат суғуриш",
+            "Фақат оқартириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 221,
+        "question": "Терапевтик стоматология нима билан шуғулланади?",
+        "options": [
+            "Кариес ва унинг асоратларини даволаш",
+            "Протезлаш",
+            "Имплантация",
+            "Тиш суғуриш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 222,
+        "question": "Кариес нима?",
+        "options": [
+            "Тишнинг қаттиқ тўқималарининг емирилиши",
+            "Тиш тошлари",
+            "Милк яллиғланиши",
+            "Тиш силжиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 223,
+        "question": "Пульпит нима?",
+        "options": [
+            "Пульпанинг яллиғланиши",
+            "Милк касаллиги",
+            "Эмаль емирилиши",
+            "Тиш бўйни очилиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 224,
+        "question": "Периодонтит нима?",
+        "options": [
+            "Периодонт тўқималарининг яллиғланиши",
+            "Тиш эмали касаллиги",
+            "Пульпа касаллиги",
+            "Милк қонashi"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 225,
+        "question": "Кариеснинг бошланғич босқичи:",
+        "options": [
+            "Оқ доғ",
+            "Қора ковак",
+            "Пульпит",
+            "Периодонтит"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 226,
+        "question": "Тиш эмали нимадан ташкил топган?",
+        "options": [
+            "Минерал моддалар",
+            "Органик модда",
+            "Қон томир",
+            "Нервлар"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 227,
+        "question": "Дентин нима?",
+        "options": [
+            "Тишнинг асосий қаттиқ тўқимаси",
+            "Тишнинг ташқи қатлами",
+            "Милк",
+            "Пульпа"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 228,
+        "question": "Пульпа таркибида нима бор?",
+        "options": [
+            "Қон томир ва нервлар",
+            "Фақат минерал",
+            "Фақат сув",
+            "Эмаль"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 229,
+        "question": "Ортодонтия нима билан шуғулланади?",
+        "options": [
+            "Тиш қаторини тўғрилаш",
+            "Тиш суғуриш",
+            "Пломба қўйиш",
+            "Имплант қўйиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 230,
+        "question": "Ортопедик стоматология нима?",
+        "options": [
+            "Тишларни протезлаш",
+            "Кариес даволаш",
+            "Милкни даволаш",
+            "Тиш оқартириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 231,
+        "question": "Хирургик стоматология нима билан шуғулланади?",
+        "options": [
+            "Тиш суғуриш ва жарроҳлик амалиётлари",
+            "Кариес даволаш",
+            "Протезлаш",
+            "Оқартириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 232,
+        "question": "Пародонтология нима билан шуғулланади?",
+        "options": [
+            "Милк ва пародонт тўқималари касалликлари",
+            "Эмаль касаллиги",
+            "Имплантация",
+            "Тиш оқартириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 233,
+        "question": "Кариеснинг асосий сабаби:",
+        "options": [
+            "Бактериялар таъсири",
+            "Механик жароҳат",
+            "Иссиқ овқат",
+            "Совуқ сув"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 234,
+        "question": "Тиш тошлари нима натижасида ҳосил бўлади?",
+        "options": [
+            "Овқат қолдиқлари ва минерал тузлар йиғилиши",
+            "Эмаль емирилиши",
+            "Нерв яллиғланиши",
+            "Қон кетиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 235,
+        "question": "Гингивит нима?",
+        "options": [
+            "Милк яллиғланиши",
+            "Пульпа яллиғланиши",
+            "Дентин емирилиши",
+            "Эмаль шикасти"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 236,
+        "question": "Пародонтит асорати:",
+        "options": [
+            "Тишнинг қимирлаши",
+            "Тиш оқариши",
+            "Эмаль қалинлашиши",
+            "Тиш ўсиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 237,
+        "question": "Анестезия нима мақсадда қилинади?",
+        "options": [
+            "Оғриқсизлантириш",
+            "Тишни оқартириш",
+            "Тишни мустаҳкамлаш",
+            "Ранг бериш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 238,
+        "question": "Рентгенография нима учун керак?",
+        "options": [
+            "Ички тузилишни кўриш",
+            "Тишни оқартириш",
+            "Пломба қўйиш",
+            "Тишни суғуриш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 239,
+        "question": "Пломба қўйишдан мақсад:",
+        "options": [
+            "Ковакни тўлдириш ва функцияни тиклаш",
+            "Эстетика",
+            "Тишни узайтириш",
+            "Милкни даволаш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 240,
+        "question": "Профилактиканинг асосий усули:",
+        "options": [
+            "Доимий оғиз гигиенаси",
+            "Тиш суғуриш",
+            "Фақат дори ичиш",
+            "Оқартириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 241,
+        "question": "Кариес профилактикасида фторнинг аҳамияти:",
+        "options": [
+            "Эмални мустаҳкамлайди",
+            "Ранг беради",
+            "Милкни даволайди",
+            "Нервни ўлдиради"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 242,
+        "question": "Тиш чўткаси қанча вақтда алмаштирилади?",
+        "options": [
+            "3 ойда",
+            "1 йилда",
+            "6 ойда",
+            "2 йилда"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 243,
+        "question": "Болаларда кариес тез ривожланиш сабаби:",
+        "options": [
+            "Юмшоқ дентин",
+            "Қаттиқ эмаль",
+            "Кенг канал",
+            "Қалин эмаль"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 244,
+        "question": "Сут тишларининг аҳамияти:",
+        "options": [
+            "Чайнаш ва жой сақлаш",
+            "Аҳамияти йўқ",
+            "Фақат эстетика",
+            "Фақат гапириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 245,
+        "question": "Доимий тишлар сони:",
+        "options": [
+            "28–32",
+            "20",
+            "24",
+            "36"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 246,
+        "question": "Сут тишлар сони:",
+        "options": [
+            "20",
+            "32",
+            "28",
+            "24"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 247,
+        "question": "Имплант нима?",
+        "options": [
+            "Сунъий тиш илдизи",
+            "Пломба",
+            "Oqartириш",
+            "Милк дориси"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 248,
+        "question": "Брекетлар нима учун қўйилади?",
+        "options": [
+            "Тиш қаторини тўғрилаш",
+            "Оқартириш",
+            "Суғуриш",
+            "Пломба"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 249,
+        "question": "Тиш сезувчанлиги сабаби:",
+        "options": [
+            "Дентин очилиши",
+            "Эмаль бутун",
+            "Қалин эмаль",
+            "Соғлом пульпа"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 250,
+        "question": "Галитоз нима?",
+        "options": [
+            "Оғиздан нохуш ҳид",
+            "Милк оғриғи",
+            "Тиш қимирлаши",
+            "Эмаль емирилиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 251,
+        "question": "Стоматит нима?",
+        "options": [
+            "Оғиз шиллиқ қавати яллиғланиши",
+            "Милк касаллиги",
+            "Пульпа яллиғланиши",
+            "Эмаль касаллиги"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 252,
+        "question": "Абсцесс нима?",
+        "options": [
+            "Йирингли яллиғланиш",
+            "Қон кетиш",
+            "Оқ доғ",
+            "Қаттиқлашиш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 253,
+        "question": "Антисептиклар нима учун?",
+        "options": [
+            "Инфекцияни йўқ қилиш",
+            "Ранг бериш",
+            "Oqartириш",
+            "Қаттиқлаштириш"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 254,
+        "question": "Пульпит асорати:",
+        "options": [
+            "Периодонтит",
+            "Oqartириш",
+            "Тиш ўсиши",
+            "Эмаль қалинлашиши"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 255,
+        "question": "Қайси усул диагностикада қўлланилади?",
+        "options": [
+            "Рентген",
+            "Oqartириш",
+            "Полировка",
+            "Герметизация"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 256,
+        "question": "Пломба материал тури:",
+        "options": [
+            "Композит",
+            "Сув",
+            "Газ",
+            "Ёғ"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 257,
+        "question": "Шиша иономер цемент афзаллиги:",
+        "options": [
+            "Фтор ажратиш",
+            "Металл кўплиги",
+            "Ранг қоралиги",
+            "Эластиклик йўқ"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 258,
+        "question": "Тиш оқартириш усули:",
+        "options": [
+            "Пероксидлар",
+            "Сув",
+            "Туз",
+            "Йод"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 259,
+        "question": "Кариес профилактикаси:",
+        "options": [
+            "Гигиена ва фтор",
+            "Ширинлик кўп истеъмол",
+            "Тиш суғуриш",
+            "Даволамаслик"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 260,
+        "question": "Пародонт касаллигида:",
+        "options": [
+            "Милк қонайди",
+            "Тиш мустаҳкам",
+            "Эмаль қалин",
+            "Нерв ўлади"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 261,
+        "question": "Анестетик мисол:",
+        "options": [
+            "Лидокаин",
+            "Глюкоза",
+            "Витамин",
+            "Кальций"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 262,
+        "question": "Тиш илдизи қисми:",
+        "options": [
+            "Илдиз",
+            "Коронка",
+            "Бўйин",
+            "Эмаль"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 263,
+        "question": "Коронка нима?",
+        "options": [
+            "Тишнинг кўринадиган қисми",
+            "Милк",
+            "Нерв",
+            "Қон"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 264,
+        "question": "Тиш бўйни жойлашган:",
+        "options": [
+            "Коронка ва илдиз оралиғида",
+            "Илдизда",
+            "Коронка юқорида",
+            "Пульпада"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 265,
+        "question": "Тиш формуласи катталарда:",
+        "options": [
+            "2-1-2-3",
+            "1-2-3-2",
+            "3-2-1-2",
+            "2-2-2-2"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 266,
+        "question": "Оғиз гигиенаси воситаси:",
+        "options": [
+            "Тиш ипи",
+            "Қалам",
+            "Сочиқ",
+            "Қошиқ"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 267,
+        "question": "Тиш тошини олиш усули:",
+        "options": [
+            "Ультразвук",
+            "Oqartириш",
+            "Суғуриш",
+            "Герметизация"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 268,
+        "question": "Кариес босқичлари сони:",
+        "options": [
+            "4",
+            "1",
+            "2",
+            "6"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 269,
+        "question": "Тиш оғриғи сабаби:",
+        "options": [
+            "Яллиғланиш",
+            "Соғлом тиш",
+            "Oqartириш",
+            "Полировка"
+        ],
+        "correct_option_id": 0
+    },
+    {
+        "id": 270,
+        "question": "Стоматологга кўриниш частотаси:",
+        "options": [
+            "6 ойда 1 марта",
+            "5 йилда 1 марта",
+            "2 йилда 1 марта",
+            "Фақат оғриганда"
+        ],
+        "correct_option_id": 0
+    }
+]
+
+    function shuffleArray(arr) {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+    }
+
+    function shuffleQuestionOptions(question) {
+        const correctIndex = typeof question.correct === 'number'
+            ? question.correct
+            : question.correct_option_id;
+        const indexed = question.options.map((text, index) => ({
+            text,
+            isCorrect: index === correctIndex
+        }));
+        const shuffled = shuffleArray(indexed);
+        return {
+            ...question,
+            options: shuffled.map((item) => item.text),
+            correct: shuffled.findIndex((item) => item.isCorrect)
+        };
+    }
+
+    // O'zgaruvchilar
+    let currentBlockQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let wrongCount = 0;
+    let selectedIdx = null;
+    let activeBlockNum = 0;
+    let isLocked = false;
+    let autoNextTimer = null;
+
+    const homeScreen = document.getElementById('home-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const blocksContainer = document.getElementById('blocks-container');
+    const correctCountEl = document.getElementById('correct-count');
+    const wrongCountEl = document.getElementById('wrong-count');
+
+    // 1. BOSH SAHIFADA BLOKLARNI CHIQARISH
+    function initHome() {
+        blocksContainer.innerHTML = '';
+        const totalBlocks = Math.ceil(allTests.length / QUESTIONS_PER_BLOCK);
+        
+        for (let i = 0; i < totalBlocks; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'block-btn';
+            btn.innerText = `${i + 1}-blok\n(${i * QUESTIONS_PER_BLOCK + 1}-${Math.min((i + 1) * QUESTIONS_PER_BLOCK, allTests.length)})`;
+            btn.onclick = () => startBlock(i);
+            blocksContainer.appendChild(btn);
+        }
+    }
+
+    // 2. TESTNI BOSHLASH
+    function startBlock(blockIdx) {
+        if (autoNextTimer) {
+            clearTimeout(autoNextTimer);
+            autoNextTimer = null;
+        }
+        activeBlockNum = blockIdx;
+        const start = blockIdx * QUESTIONS_PER_BLOCK;
+        const end = start + QUESTIONS_PER_BLOCK;
+        currentBlockQuestions = shuffleArray(allTests.slice(start, end)).map(shuffleQuestionOptions);
+        
+        currentIndex = 0;
+        score = 0;
+        wrongCount = 0;
+
+        homeScreen.classList.add('hidden');
+        resultScreen.classList.add('hidden');
+        quizScreen.classList.remove('hidden');
+        
+        document.getElementById('block-title').innerText = `${blockIdx + 1}-blok`;
+        correctCountEl.innerText = score;
+        wrongCountEl.innerText = wrongCount;
+        showQuestion();
+    }
+
+    // 3. SAVOLNI KO'RSATISH
+    function showQuestion() {
+        selectedIdx = null;
+        isLocked = false;
+        
+        const q = currentBlockQuestions[currentIndex];
+        document.getElementById('progress-value').innerText = `${currentIndex + 1}/${currentBlockQuestions.length}`;
+        document.getElementById('question-body').innerText = q.question;
+        
+        const optionsBody = document.getElementById('options-body');
+        optionsBody.innerHTML = '';
+        
+        q.options.forEach((opt, idx) => {
+            const div = document.createElement('div');
+            div.className = 'option-item';
+            div.innerText = opt;
+            div.onclick = () => {
+                if (isLocked) return;
+                isLocked = true;
+                const allOpts = optionsBody.querySelectorAll('.option-item');
+                allOpts.forEach((el, optionIndex) => {
+                    el.classList.remove('selected');
+                    el.style.pointerEvents = 'none';
+                    if (optionIndex === q.correct) {
+                        el.classList.add('correct');
+                    } else {
+                        el.classList.add('dimmed');
+                    }
+                });
+
+                selectedIdx = idx;
+                if (idx !== q.correct) {
+                    div.classList.remove('dimmed');
+                    div.classList.add('wrong');
+                }
+
+                autoNextTimer = setTimeout(() => {
+                    nextQuestion();
+                    autoNextTimer = null;
+                }, 1000);
+            };
+            optionsBody.appendChild(div);
+        });
+    }
+
+    // 4. KEYINGI SAVOLGA O'TISH
+    function nextQuestion() {
+        if (selectedIdx === currentBlockQuestions[currentIndex].correct) {
+            score++;
+        } else {
+            wrongCount++;
+        }
+        correctCountEl.innerText = score;
+        wrongCountEl.innerText = wrongCount;
+
+        currentIndex++;
+
+        if (currentIndex < currentBlockQuestions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    // 5. NATIJANI KO'RSATISH
+    function showResult() {
+        if (autoNextTimer) {
+            clearTimeout(autoNextTimer);
+            autoNextTimer = null;
+        }
+        quizScreen.classList.add('hidden');
+        resultScreen.classList.remove('hidden');
+
+        const answeredCount = score + wrongCount;
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('result-stats').innerText = `Javob berilgan: ${answeredCount}/${currentBlockQuestions.length}`;
+        document.getElementById('result-correct').innerText = `To'g'ri: ${score}`;
+        document.getElementById('result-wrong').innerText = `Xato: ${wrongCount}`;
+    }
+
+    function finishQuiz() {
+        showResult();
+    }
+
+    // 6. NAVIGATSIYA
+    function goHome() {
+        if (autoNextTimer) {
+            clearTimeout(autoNextTimer);
+            autoNextTimer = null;
+        }
+        resultScreen.classList.add('hidden');
+        quizScreen.classList.add('hidden');
+        homeScreen.classList.remove('hidden');
+    }
+
+    function restartQuiz() {
+        startBlock(activeBlockNum);
+    }
+
+    function startNextBlock() {
+        const totalBlocks = Math.ceil(allTests.length / QUESTIONS_PER_BLOCK);
+        const nextBlock = (activeBlockNum + 1) % totalBlocks;
+        startBlock(nextBlock);
+    }
+
+    // Dasturni ishga tushirish
+    initHome();
+</script>
+
+</body>
+</html>
