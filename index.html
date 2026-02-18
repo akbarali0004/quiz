@@ -42,7 +42,7 @@
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 14px;
-            margin-top: 20px;
+            margin-top: 34px;
         }
 
         .block-btn {
@@ -56,6 +56,10 @@
             border-radius: 14px;
             cursor: pointer;
             transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+        }
+
+        .block-btn-wide {
+            grid-column: 1 / -1;
         }
 
         .block-btn:hover {
@@ -253,7 +257,7 @@
             <span id="block-title" style="font-weight: bold; color: var(--primary);">1-blok</span>
             <div class="score-live">
                 <span class="stat-chip">
-                    <span class="stat-icon icon-correct">✓</span>
+                    <span class="stat-icon icon-correct">вњ“</span>
                     <span>To'g'ri:</span>
                     <span id="correct-count">0</span>
                 </span>
@@ -3266,6 +3270,195 @@
     }
 ]
 
+
+    const allTests2 = [
+    {
+        "id": 1,
+        "question": " Qaysi estrogen turi faqatgina homiladorlik davrida ishlab chiqariladi?",
+        "answer": " Estriol (E3) – faqat homiladorlikda (platsenta orqali) ko‘p ishlab chiqariladi."
+    },
+    {
+        "id": 2,
+        "question": " Tug'ruq kunini hisoblaganda ovulyatsiya qachon bo'ladi?",
+        "answer": " Ovulyatsiya – 28 kunlik siklda odatda 14-kuni (hayzdan 14 kun oldin)."
+    },
+    {
+        "id": 3,
+        "question": " Sacrococcygeal teratoma (SCT) haqida?",
+        "answer": " Sakrokoksigeal teratoma (SCT) – dumg‘aza sohasidagi tug‘ma o‘sma, 3 ta embrional qatlamdan rivojlanadi."
+    },
+    {
+        "id": 4,
+        "question": " Nikotin qanday modda?",
+        "answer": " Nikotin – tamaki tarkibidagi zaharli alkaloid."
+    },
+    {
+        "id": 5,
+        "question": " Homila qaysi vaqtda tug'ulsa o'z vaqtida tug'ulgan bo'ladi?",
+        "answer": " 37–42 haftada tug‘ilsa – o‘z vaqtida tug‘ilgan hisoblanadi."
+    },
+    {
+        "id": 6,
+        "question": " Xoana nima?",
+        "answer": " Xoana – burun bo‘shlig‘ining orqa teshiklari (nazofaringeal chiqish)."
+    },
+    {
+        "id": 7,
+        "question": " Stabil hujayralarning fazalari?",
+        "answer": " Stabil hujayralar fazalari: G0 (tinch), G1, S, G2, M."
+    },
+    {
+        "id": 8,
+        "question": " Jigarning yumaloq boylami qaysi qon tomirdan chiqadi?",
+        "answer": " Jigarning yumaloq boylami – kindik venasi (v. umbilicalis) qoldig‘i."
+    },
+    {
+        "id": 9,
+        "question": " Miyya suyagining pardasi nima deb ataladi?",
+        "answer": " Miya suyuqligi pardasi – pia mater."
+    },
+    {
+        "id": 10,
+        "question": " Jigarnio lib tashlagandan keyin nima rivojlanib ketati?",
+        "answer": " Jigarning o‘ng bo‘lagi olib tashlansa – chap bo‘lak gipertrofiya qiladi."
+    },
+    {
+        "id": 11,
+        "question": " Yurakning embrional qavati qayerdan boshlanadi?",
+        "answer": " Yurak embrional rivojlanishi mezodermadan (splanxnik mezoderma) boshlanadi."
+    },
+    {
+        "id": 12,
+        "question": " Rubella nima qo'zg'otadi?",
+        "answer": " Rubella – qizilcha."
+    },
+    {
+        "id": 13,
+        "question": " Eshituv azosi qaysi qatlamdan rivojlanadi?",
+        "answer": " Eshituv a’zosi – ektodermadan rivojlanadi."
+    },
+    {
+        "id": 14,
+        "question": " Quyidagi klinik simptomlardan qaysi biri annular pronksenga xos?",
+        "answer": " Annular pankreasga xos – duodenum obstruksiyasi (qusish, o‘t aralash)."
+    },
+    {
+        "id": 15,
+        "question": " Nima uchun aortaning yuqori qismida simmetriya bo'lmaydi?",
+        "answer": " Normal aortada simmetriya yo‘q – yoy qismi."
+    },
+    {
+        "id": 16,
+        "question": " Trofo blastlar nechiga bo'linadi?",
+        "answer": " Trofoblastlar: sitotrofoblast va sinsitiotrofoblast."
+    },
+    {
+        "id": 17,
+        "question": " Wolfram kanalidan qaysi qism rivojlanadi?",
+        "answer": " Wolff kanali – erkak ichki jinsiy yo‘llari (epididimis, vas deferens)ni beradi."
+    },
+    {
+        "id": 18,
+        "question": " Ratella nimadan qo'zg'oladi?",
+        "answer": " Rattella (qizilcha) – Rubella virusi qo‘zg‘atadi."
+    },
+    {
+        "id": 19,
+        "question": " Yevtaksi nayi?",
+        "answer": " Yevstaxiy nayi – o‘rta quloqni nazofaringeal bo‘shliq bilan bog‘laydi."
+    },
+    {
+        "id": 20,
+        "question": " Birlamchi tog'ay nayidan cephalon qayerdan boslanadi?",
+        "answer": " Birlamchi o‘g‘ay nayidan (neural tube) – bosh miya (cephalon) boshlanadi."
+    },
+    {
+        "id": 21,
+        "question": " Apgar shkala haqida",
+        "answer": " Apgar shkalasi – chaqaloq holatini 1 va 5-daqiqada baholash (0–10 ball)."
+    },
+    {
+        "id": 22,
+        "question": " Gavhar qaysi qatlamdan tashkil topadi?",
+        "answer": " Gavhar (ko‘z linzasi) – ektodermadan."
+    },
+    {
+        "id": 23,
+        "question": " Prostatit kasalligi uchun jinsiy zaiflikka olib keladi?",
+        "answer": " Prostata kasalligi – jinsiy zaiflik, siydik ajralish buzilishiga olib keladi."
+    },
+    {
+        "id": 24,
+        "question": " Anovilatsiya",
+        "answer": " Anovulyatsiya – ovulyatsiya bo‘lmasligi."
+    },
+    {
+        "id": 25,
+        "question": " Qaysi fazada xromosomalar ekvatr chizig'iga teriladi?",
+        "answer": " Xromosomalar ekvator chizig‘iga – metafazada tiziladi."
+    },
+    {
+        "id": 26,
+        "question": " Vas deferent?",
+        "answer": " Vas deferens – urug‘ chiqaruvchi nay."
+    },
+    {
+        "id": 27,
+        "question": " Ovulyatsiya nima?",
+        "answer": " Ovulyatsiya – tuxum hujayraning tuxumdondan chiqishi."
+    },
+    {
+        "id": 28,
+        "question": " 5 oylik bolakay progresiv disfasiya qusish va yutinishdan muammolar bilan olib kelindi gizil ơngach pastki qismida?",
+        "answer": " Qizil o‘ngach pastki qismi – achalaziya yoki striktura bo‘lishi mumkin."
+    },
+    {
+        "id": 29,
+        "question": " Odamlaarda implantatsiya qachon sodir bo'ladi?",
+        "answer": " Implantatsiya – urug‘lanishdan keyin 6–7-kuni."
+    },
+    {
+        "id": 30,
+        "question": " Jigarning katta qismi qorinning qaysi ajralmasidan hosil bo'ladi?",
+        "answer": " Jigar – qorin oldingi ichak qismidan (foregut) hosil bo‘ladi."
+    },
+    {
+        "id": 31,
+        "question": " Anular pankres nima?",
+        "answer": " Annular pankreas – oshqozon osti bezining halqa shaklida duodenumni o‘rab rivojlanishi."
+    },
+    {
+        "id": 32,
+        "question": " Sariqlik qopi?",
+        "answer": " Sariqlik qopi – embrionning oziqlanish xaltachasi (yolk sac)."
+    },
+    {
+        "id": 33,
+        "question": " Birlamchi tana bo'shlig'i qayerda joy?",
+        "answer": " Birlamchi tana bo‘shlig‘i – intraembrional koelom."
+    },
+    {
+        "id": 34,
+        "question": " Yurak qaysi qavatdan hosil bo'ladi?",
+        "answer": " Yurak – mezodermadan."
+    },
+    {
+        "id": 35,
+        "question": " Telensefalon?",
+        "answer": " Telensefalon – bosh miyaning katta yarim sharlari qismi."
+    },
+    {
+        "id": 36,
+        "question": " Arpkd polikistoz buyrak kasaligi nima ?",
+        "answer": " ARPKD – autosom-retsessiv polikistoz buyrak kasalligi (bolalarda uchraydi)."
+    },
+    {
+        "id": 37,
+        "question": " Burun orqa teshigi qayerda otadi",
+        "answer": " Burun orqa teshigi (xoana) — burun bo‘shlig‘ini nazofarinks (halqumning burun qismi) bilan bog‘laydi. Ya’ni: ➡️ Burun bo‘shlig‘idan"
+    }
+]
+
     function shuffleArray(arr) {
         const copy = [...arr];
         for (let i = copy.length - 1; i > 0; i--) {
@@ -3298,6 +3491,7 @@
     let wrongCount = 0;
     let selectedIdx = null;
     let activeBlockNum = 0;
+    let blockCatalog = [];
     let isLocked = false;
     let autoNextTimer = null;
 
@@ -3308,15 +3502,59 @@
     const correctCountEl = document.getElementById('correct-count');
     const wrongCountEl = document.getElementById('wrong-count');
 
+    function buildAllTests2QuizQuestions() {
+        return allTests2.map((item, idx) => {
+            const cleanAnswer = item.answer.trim();
+            const wrongPool = allTests2
+                .filter((_, i) => i !== idx)
+                .map((question) => question.answer.trim())
+                .filter((answer) => answer !== cleanAnswer);
+            const wrongAnswers = shuffleArray(wrongPool).slice(0, 3);
+            const options = shuffleArray([cleanAnswer, ...wrongAnswers]);
+
+            return {
+                id: item.id,
+                question: item.question.trim(),
+                options,
+                correct_option_id: options.indexOf(cleanAnswer)
+            };
+        });
+    }
+
+    const allTests2QuizQuestions = buildAllTests2QuizQuestions();
+
     // 1. BOSH SAHIFADA BLOKLARNI CHIQARISH
     function initHome() {
         blocksContainer.innerHTML = '';
         const totalBlocks = Math.ceil(allTests.length / QUESTIONS_PER_BLOCK);
-        
+
+        blockCatalog = [
+            {
+                type: 'allTests2',
+                title: 'allTests2 bloki',
+                rangeText: `(1-${allTests2QuizQuestions.length})`,
+                wide: true
+            }
+        ];
+
         for (let i = 0; i < totalBlocks; i++) {
+            blockCatalog.push({
+                type: 'allTests',
+                title: `${i + 1}-blok`,
+                rangeText: `(${i * QUESTIONS_PER_BLOCK + 1}-${Math.min((i + 1) * QUESTIONS_PER_BLOCK, allTests.length)})`,
+                blockIdx: i,
+                wide: false
+            });
+        }
+
+        for (let i = 0; i < blockCatalog.length; i++) {
+            const blockInfo = blockCatalog[i];
             const btn = document.createElement('button');
             btn.className = 'block-btn';
-            btn.innerText = `${i + 1}-blok\n(${i * QUESTIONS_PER_BLOCK + 1}-${Math.min((i + 1) * QUESTIONS_PER_BLOCK, allTests.length)})`;
+            if (blockInfo.wide) {
+                btn.classList.add('block-btn-wide');
+            }
+            btn.innerText = `${blockInfo.title}\n${blockInfo.rangeText}`;
             btn.onclick = () => startBlock(i);
             blocksContainer.appendChild(btn);
         }
@@ -3328,10 +3566,17 @@
             clearTimeout(autoNextTimer);
             autoNextTimer = null;
         }
+        const blockInfo = blockCatalog[blockIdx];
+        if (!blockInfo) return;
+
         activeBlockNum = blockIdx;
-        const start = blockIdx * QUESTIONS_PER_BLOCK;
-        const end = start + QUESTIONS_PER_BLOCK;
-        currentBlockQuestions = shuffleArray(allTests.slice(start, end)).map(shuffleQuestionOptions);
+        if (blockInfo.type === 'allTests2') {
+            currentBlockQuestions = shuffleArray(allTests2QuizQuestions).map(shuffleQuestionOptions);
+        } else {
+            const start = blockInfo.blockIdx * QUESTIONS_PER_BLOCK;
+            const end = start + QUESTIONS_PER_BLOCK;
+            currentBlockQuestions = shuffleArray(allTests.slice(start, end)).map(shuffleQuestionOptions);
+        }
         
         currentIndex = 0;
         score = 0;
@@ -3341,7 +3586,7 @@
         resultScreen.classList.add('hidden');
         quizScreen.classList.remove('hidden');
         
-        document.getElementById('block-title').innerText = `${blockIdx + 1}-blok`;
+        document.getElementById('block-title').innerText = blockInfo.title;
         correctCountEl.innerText = score;
         wrongCountEl.innerText = wrongCount;
         showQuestion();
@@ -3447,7 +3692,7 @@
     }
 
     function startNextBlock() {
-        const totalBlocks = Math.ceil(allTests.length / QUESTIONS_PER_BLOCK);
+        const totalBlocks = blockCatalog.length;
         const nextBlock = (activeBlockNum + 1) % totalBlocks;
         startBlock(nextBlock);
     }
@@ -3458,3 +3703,5 @@
 
 </body>
 </html>
+
+
