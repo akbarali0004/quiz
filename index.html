@@ -96,7 +96,7 @@
         .option-item.dimmed { opacity: 0.45; }
 
         .footer { margin-top: 25px; display: flex; justify-content: space-between; align-items: center; }
-        .quiz-finish-row { margin-top: 72px; justify-content: flex-end; }
+        .quiz-finish-row { margin-top: 72px; justify-content: space-between; }
         .quiz-top {
             display: flex;
             flex-direction: column;
@@ -282,6 +282,8 @@
         <div class="question-text" id="question-body">Savol matni shu yerda chiqadi?</div>
         <div class="options-list" id="options-body"></div>
         <div class="footer quiz-finish-row">
+            <button class="btn btn-home" id="prev-btn" onclick="prevQuestion()">Oldingi savol</button>
+            <button class="btn btn-next" id="next-btn" onclick="goNextQuestionManual()">Keyingi savol</button>
             <button class="btn btn-finish" onclick="finishQuiz()">Tugatish</button>
         </div>
     </div>
@@ -4300,11 +4302,11 @@
     let currentIndex = 0;
     let score = 0;
     let wrongCount = 0;
-    let selectedIdx = null;
+    let selectedAnswers = [];
     let activeBlockNum = 0;
     let blockCatalog = [];
-    let isLocked = false;
     let autoNextTimer = null;
+    let autoAdvanceQuestionIndex = -1;
 
     const homeScreen = document.getElementById('home-screen');
     const quizScreen = document.getElementById('quiz-screen');
@@ -4312,6 +4314,8 @@
     const blocksContainer = document.getElementById('blocks-container');
     const correctCountEl = document.getElementById('correct-count');
     const wrongCountEl = document.getElementById('wrong-count');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
 
     function buildQuizQuestionsFromQa(sourceTests) {
         return sourceTests.map((item, idx) => {
@@ -4374,6 +4378,7 @@
                 rangeText: `(1-${allTests6QuizQuestions.length})`,
                 questions: allTests6QuizQuestions,
                 isNew: true,
+                answerDelayMs: 2000,
                 wide: false
             },
             {
@@ -4417,6 +4422,7 @@
             clearTimeout(autoNextTimer);
             autoNextTimer = null;
         }
+        autoAdvanceQuestionIndex = -1;
         const blockInfo = blockCatalog[blockIdx];
         if (!blockInfo) return;
 
@@ -4432,6 +4438,7 @@
         currentIndex = 0;
         score = 0;
         wrongCount = 0;
+        selectedAnswers = Array(currentBlockQuestions.length).fill(null);
 
         homeScreen.classList.add('hidden');
         resultScreen.classList.add('hidden');
@@ -4443,14 +4450,40 @@
         showQuestion();
     }
 
+    function updateScoreBoard() {
+        let answered = 0;
+        let correct = 0;
+        for (let i = 0; i < currentBlockQuestions.length; i++) {
+            const selected = selectedAnswers[i];
+            if (selected === null) continue;
+            answered++;
+            if (selected === currentBlockQuestions[i].correct) {
+                correct++;
+            }
+        }
+
+        score = correct;
+        wrongCount = answered - correct;
+        correctCountEl.innerText = score;
+        wrongCountEl.innerText = wrongCount;
+    }
+
     // 3. SAVOLNI KO'RSATISH
     function showQuestion() {
-        selectedIdx = null;
-        isLocked = false;
-        
         const q = currentBlockQuestions[currentIndex];
+        const selectedForQuestion = selectedAnswers[currentIndex];
         document.getElementById('progress-value').innerText = `${currentIndex + 1}/${currentBlockQuestions.length}`;
         document.getElementById('question-body').innerText = q.question;
+        prevBtn.disabled = currentIndex === 0;
+        const isAnswered = selectedForQuestion !== null;
+        const isWaitingAutoAdvance =
+            autoNextTimer !== null && autoAdvanceQuestionIndex === currentIndex;
+        const shouldShowNextBtn =
+            isAnswered &&
+            !isWaitingAutoAdvance &&
+            currentIndex < currentBlockQuestions.length - 1;
+        nextBtn.style.display = shouldShowNextBtn ? 'inline-block' : 'none';
+        nextBtn.disabled = !shouldShowNextBtn;
         
         const optionsBody = document.getElementById('options-body');
         optionsBody.innerHTML = '';
@@ -4459,45 +4492,40 @@
             const div = document.createElement('div');
             div.className = 'option-item';
             div.innerText = opt;
-            div.onclick = () => {
-                if (isLocked) return;
-                isLocked = true;
-                const allOpts = optionsBody.querySelectorAll('.option-item');
-                allOpts.forEach((el, optionIndex) => {
-                    el.classList.remove('selected');
-                    el.style.pointerEvents = 'none';
-                    if (optionIndex === q.correct) {
-                        el.classList.add('correct');
-                    } else {
-                        el.classList.add('dimmed');
-                    }
-                });
 
-                selectedIdx = idx;
-                if (idx !== q.correct) {
+            if (selectedForQuestion !== null) {
+                div.style.pointerEvents = 'none';
+                if (idx === q.correct) {
+                    div.classList.add('correct');
+                } else {
+                    div.classList.add('dimmed');
+                }
+                if (idx === selectedForQuestion && idx !== q.correct) {
                     div.classList.remove('dimmed');
                     div.classList.add('wrong');
                 }
+            } else {
+                div.onclick = () => {
+                    if (selectedAnswers[currentIndex] !== null) return;
 
-                autoNextTimer = setTimeout(() => {
-                    nextQuestion();
-                    autoNextTimer = null;
-                }, 1000);
-            };
+                    selectedAnswers[currentIndex] = idx;
+                    updateScoreBoard();
+                    const answerDelayMs = blockCatalog[activeBlockNum]?.answerDelayMs ?? 1000;
+                    autoAdvanceQuestionIndex = currentIndex;
+                    autoNextTimer = setTimeout(() => {
+                        autoNextTimer = null;
+                        autoAdvanceQuestionIndex = -1;
+                        nextQuestion();
+                    }, answerDelayMs);
+                    showQuestion();
+                };
+            }
             optionsBody.appendChild(div);
         });
     }
 
     // 4. KEYINGI SAVOLGA O'TISH
     function nextQuestion() {
-        if (selectedIdx === currentBlockQuestions[currentIndex].correct) {
-            score++;
-        } else {
-            wrongCount++;
-        }
-        correctCountEl.innerText = score;
-        wrongCountEl.innerText = wrongCount;
-
         currentIndex++;
 
         if (currentIndex < currentBlockQuestions.length) {
@@ -4507,12 +4535,36 @@
         }
     }
 
+    function prevQuestion() {
+        if (currentIndex === 0) return;
+        if (autoNextTimer) {
+            clearTimeout(autoNextTimer);
+            autoNextTimer = null;
+        }
+        autoAdvanceQuestionIndex = -1;
+        currentIndex--;
+        showQuestion();
+    }
+
+    function goNextQuestionManual() {
+        if (currentIndex >= currentBlockQuestions.length - 1) return;
+        if (selectedAnswers[currentIndex] === null) return;
+        if (autoNextTimer) {
+            clearTimeout(autoNextTimer);
+            autoNextTimer = null;
+        }
+        autoAdvanceQuestionIndex = -1;
+        currentIndex++;
+        showQuestion();
+    }
+
     // 5. NATIJANI KO'RSATISH
     function showResult() {
         if (autoNextTimer) {
             clearTimeout(autoNextTimer);
             autoNextTimer = null;
         }
+        autoAdvanceQuestionIndex = -1;
         quizScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
 
@@ -4533,6 +4585,7 @@
             clearTimeout(autoNextTimer);
             autoNextTimer = null;
         }
+        autoAdvanceQuestionIndex = -1;
         resultScreen.classList.add('hidden');
         quizScreen.classList.add('hidden');
         homeScreen.classList.remove('hidden');
@@ -4554,5 +4607,3 @@
 
 </body>
 </html>
-
-
