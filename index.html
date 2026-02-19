@@ -57,6 +57,11 @@
             cursor: pointer;
             transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
         }
+        .block-btn-new {
+            background: #fff7d6;
+            border-color: #facc15;
+            color: #92400e;
+        }
 
         .block-btn-wide {
             grid-column: 1 / -1;
@@ -65,6 +70,11 @@
         .block-btn:hover {
             background: #4f8df4;
             border-color: #3b82f6;
+            color: #ffffff;
+        }
+        .block-btn.block-btn-new:hover {
+            background: #f59e0b;
+            border-color: #d97706;
             color: #ffffff;
         }
 
@@ -3275,47 +3285,47 @@
     {
         "id": 1,
         "question": " Qaysi estrogen turi faqatgina homiladorlik davrida ishlab chiqariladi?",
-        "answer": "Estriol (E3) – faqat homiladorlikda (platsenta orqali) ko‘p ishlab chiqariladi."
+        "answer": " Estriol (E3) – faqat homiladorlikda (platsenta orqali) ko‘p ishlab chiqariladi."
     },
     {
         "id": 2,
         "question": " Tug'ruq kunini hisoblaganda ovulyatsiya qachon bo'ladi?",
-        "answer": "Ovulyatsiya – 28 kunlik siklda odatda 14-kuni (hayzdan 14 kun oldin)."
+        "answer": " Ovulyatsiya – 28 kunlik siklda odatda 14-kuni (hayzdan 14 kun oldin)."
     },
     {
         "id": 3,
         "question": " Sacrococcygeal teratoma (SCT) haqida?",
-        "answer": "Sakrokoksigeal teratoma (SCT) – dumg‘aza sohasidagi tug‘ma o‘sma, 3 ta embrional qatlamdan rivojlanadi."
+        "answer": " Sakrokoksigeal teratoma (SCT) – dumg‘aza sohasidagi tug‘ma o‘sma, 3 ta embrional qatlamdan rivojlanadi."
     },
     {
         "id": 4,
         "question": " Nikotin qanday modda?",
-        "answer": "Nikotin – tamaki tarkibidagi zaharli alkaloid."
+        "answer": " Nikotin – tamaki tarkibidagi zaharli alkaloid."
     },
     {
         "id": 5,
         "question": " Homila qaysi vaqtda tug'ulsa o'z vaqtida tug'ulgan bo'ladi?",
-        "answer": "37–42 haftada tug‘ilsa – o‘z vaqtida tug‘ilgan hisoblanadi."
+        "answer": " 37–42 haftada tug‘ilsa – o‘z vaqtida tug‘ilgan hisoblanadi."
     },
     {
         "id": 6,
         "question": " Xoana nima?",
-        "answer": "Xoana – burun bo‘shlig‘ining orqa teshiklari (nazofaringeal chiqish)."
+        "answer": " Xoana – burun bo‘shlig‘ining orqa teshiklari (nazofaringeal chiqish)."
     },
     {
         "id": 7,
         "question": " Stabil hujayralarning fazalari?",
-        "answer": "Stabil hujayralar fazalari: G0 (tinch), G1, S, G2, M."
+        "answer": " Stabil hujayralar fazalari: G0 (tinch), G1, S, G2, M."
     },
     {
         "id": 8,
         "question": " Jigarning yumaloq boylami qaysi qon tomirdan chiqadi?",
-        "answer": "Jigarning yumaloq boylami – kindik venasi (v. umbilicalis) qoldig‘i."
+        "answer": " Jigarning yumaloq boylami – kindik venasi (v. umbilicalis) qoldig‘i."
     },
     {
         "id": 9,
         "question": " Miyya suyagining pardasi nima deb ataladi?",
-        "answer": "Miya suyuqligi pardasi – pia mater."
+        "answer": " Miya suyuqligi pardasi – pia mater."
     },
     {
         "id": 10,
@@ -3330,7 +3340,7 @@
     {
         "id": 12,
         "question": " Rubella nima qo'zg'otadi?",
-        "answer": " Rubella- (qizilcha) – Rubella virusi qo‘zg‘atadi."
+        "answer": " Rubella – qizilcha."
     },
     {
         "id": 13,
@@ -3360,7 +3370,7 @@
     {
         "id": 18,
         "question": " Ratella nimadan qo'zg'oladi?",
-        "answer": " Patella (Tizza qopqog'i) ​Patella — bu sesamoid suyak bo'lib, u to'rt boshli mushak (quadriceps) payining ichida rivojlanadi."
+        "answer": " Rattella (qizilcha) – Rubella virusi qo‘zg‘atadi."
     },
     {
         "id": 19,
@@ -3435,12 +3445,12 @@
     {
         "id": 33,
         "question": " Birlamchi tana bo'shlig'i qayerda joy?",
-        "answer": " Birlamchi tana bo'shlig'i (Coelom) ​U lateral plastinka mezodermasining qatlamlari (somatik va splanxnik) orasida joylashgan bo'ladi."
+        "answer": " Birlamchi tana bo‘shlig‘i – intraembrional koelom."
     },
     {
         "id": 34,
         "question": " Yurak qaysi qavatdan hosil bo'ladi?",
-        "answer": " Yurak devori (miokard va epikard) splanxnik mezodermadan, endokard esa endotelial naychadan hosil bo'ladi."
+        "answer": " Yurak – mezodermadan."
     },
     {
         "id": 35,
@@ -3456,6 +3466,822 @@
         "id": 37,
         "question": " Burun orqa teshigi qayerda otadi",
         "answer": " Burun orqa teshigi (xoana) — burun bo‘shlig‘ini nazofarinks (halqumning burun qismi) bilan bog‘laydi. Ya’ni: ➡️ Burun bo‘shlig‘idan"
+    }
+]
+
+
+    const allTests3 = [
+    {
+        "id": 1,
+        "question": "Oshqozon devori burmasi nomi nima?",
+        "answer": "Rugae gastricae"
+    },
+    {
+        "id": 2,
+        "question": "Qorin devori pardalari qaysilar?",
+        "answer": "Teri → yuzaki fastsiya → mushaklar → fascia transversalis → peritoneum"
+    },
+    {
+        "id": 3,
+        "question": "Diafragma ustida nima joylashgan?",
+        "answer": "Ko‘krak bo‘shlig‘i"
+    },
+    {
+        "id": 4,
+        "question": "Fibroz bo‘g‘imlarga qaysilar kiradi?",
+        "answer": "Sutura, sindesmoz, gomfoz"
+    },
+    {
+        "id": 5,
+        "question": "Spermatik fassiyaning tashqi yuzasini nima hosil qiladi?",
+        "answer": "M. obliquus externus abdominis aponevrozi"
+    },
+    {
+        "id": 6,
+        "question": "Yumshoq miya pardasi qaysi?",
+        "answer": "Pia mater"
+    },
+    {
+        "id": 7,
+        "question": "Ensa osti uchburchagining yuqori chegarasini qaysi muskul hosil qiladi?",
+        "answer": "M. obliquus capitis superior"
+    },
+    {
+        "id": 8,
+        "question": "7–8–9-qovurg‘alararo arteriyalar qaysi qon tomirdan ajraladi?",
+        "answer": "Aorta thoracica"
+    },
+    {
+        "id": 9,
+        "question": "Qovurg‘alararo VAN qayerda joylashadi?",
+        "answer": "Sulcus costae ichida (qovurg‘aning pastki cheti ostida)"
+    },
+    {
+        "id": 10,
+        "question": "Ensa osti uchburchagining yuqori qismi nimadan hosil bo‘ladi?",
+        "answer": "M. obliquus capitis superior"
+    },
+    {
+        "id": 11,
+        "question": "Fibroz boylam qayerda uchraydi?",
+        "answer": "Suyaklar orasida (harakatsiz birikma joyida)"
+    },
+    {
+        "id": 12,
+        "question": "Apendikulyar skeletga qaysi suyaklar kirmaydi?",
+        "answer": "O‘q skeleti suyaklari (bosh suyagi, umurtqa, qovurg‘a, to‘sh)"
+    },
+    {
+        "id": 13,
+        "question": "Urug‘ suyuqligini nima ishlab chiqaradi?",
+        "answer": "Vesicula seminalis"
+    },
+    {
+        "id": 14,
+        "question": "Pilorik sfinktorni qaysi tuzilma boshqaradi?",
+        "answer": "Vegetativ nerv tizimi (n. vagus)"
+    },
+    {
+        "id": 15,
+        "question": "Ensa osti bo‘g‘imi qanday bo‘g‘im?",
+        "answer": "Atlanto-occipital bo‘g‘im (ellipsoidsimon)"
+    },
+    {
+        "id": 16,
+        "question": "Bo‘yinning C2 sohasidan chiquvchi nerv qayerni innervatsiya qiladi?",
+        "answer": "Ensa terisini (n. occipitalis major)"
+    },
+    {
+        "id": 17,
+        "question": "Epiploik teshikning 4 ta chegarasini ayting.",
+        "answer": "Oldi – lig. hepatoduodenale; Orqa – v. cava inferior; Yuqori – jigar; Past – duodenum"
+    },
+    {
+        "id": 18,
+        "question": "Superior vena cavada klapan bormi?",
+        "answer": "Klapan yo‘q"
+    },
+    {
+        "id": 19,
+        "question": "Oldingi qorin sohasi nechta qismga bo‘linadi?",
+        "answer": "9 qism"
+    },
+    {
+        "id": 20,
+        "question": "Anastomoz nima?",
+        "answer": "Tomirlarning o‘zaro qo‘shilishi"
+    },
+    {
+        "id": 21,
+        "question": "Qovurg‘alararo limfa tomirlari qayerga quyiladi?",
+        "answer": "Ductus thoracicusga"
+    },
+    {
+        "id": 22,
+        "question": "Sinovial bo‘g‘im turlariga kirmaydigan bo‘g‘imlar qaysilar?",
+        "answer": "Sutura va sindesmoz"
+    },
+    {
+        "id": 23,
+        "question": "Epiploik teshik qaysi tuzilmalarni bog‘laydi?",
+        "answer": "Katta va kichik charvi bo‘shliqlarini"
+    },
+    {
+        "id": 24,
+        "question": "Kindik burmasini nima hosil qiladi?",
+        "answer": "Lig. teres hepatis"
+    },
+    {
+        "id": 25,
+        "question": "Mushakni suyak yoki tog‘ay bilan biriktiruvchi zich to‘qima nima?",
+        "answer": "Pay (tendo)"
+    },
+    {
+        "id": 26,
+        "question": "Ko‘ndalang targ‘il mushakka xos bo‘lmagan xususiyat qaysi?",
+        "answer": "Ichki organlar harakati"
+    },
+    {
+        "id": 27,
+        "question": "Ko‘ndalang teshiklar qaysi umurtqalarda bo‘ladi?",
+        "answer": "Bo‘yin umurtqalari"
+    },
+    {
+        "id": 28,
+        "question": "Ensa osti bo‘g‘imlari qaysilar?",
+        "answer": "Atlanto-axial va atlanto-occipital"
+    },
+    {
+        "id": 29,
+        "question": "Kalta suyaklar shakli qanday?",
+        "answer": "Kubsimon"
+    },
+    {
+        "id": 30,
+        "question": "Orqa miya shakli qanday?",
+        "answer": "Silindrsimon"
+    },
+    {
+        "id": 31,
+        "question": "Qizilo‘ngachning anatomik torayishlari nechta va qayerda?",
+        "answer": "3 ta – C6, Th4–5, Th10"
+    },
+    {
+        "id": 32,
+        "question": "Qizilo‘ngach mushak qavati qanday tuzilgan?",
+        "answer": "Yuqori – ko‘ndalang targ‘il; O‘rta – aralash; Past – silliq mushak"
+    }
+]
+
+
+    const allTests4 = [
+    {
+        "id": 1,
+        "question": "Limfotsitlarning B va T hujayralari prekursorlari qayerda ishlab chiqariladi?",
+        "answer": "Suyak iligida ishlab chiqariladi."
+    },
+    {
+        "id": 2,
+        "question": "Ensa ostida mavjud bo‘lgan bo‘g‘imni aniqlang.",
+        "answer": "Atlanto-occipital bo‘g‘im."
+    },
+    {
+        "id": 3,
+        "question": "Ikkita yaqin suyakni bog‘laydigan bog‘lam qaysi?",
+        "answer": "Interosseal bog‘lam."
+    },
+    {
+        "id": 4,
+        "question": "Cauda equina nima?",
+        "answer": "Lumbal va sakral nerv ildizlari to‘plami."
+    },
+    {
+        "id": 5,
+        "question": "Axis (C2) uchun xos xususiyat nima?",
+        "answer": "Dens (tishsimon o‘simta) mavjudligi, boshning burilish harakatini ta’minlaydi."
+    },
+    {
+        "id": 6,
+        "question": "Ko‘krak qafasida limfa drenajida qatnashmaydigan tomir qaysi?",
+        "answer": "Arteriyalar (masalan, yirik arteriyalar)."
+    },
+    {
+        "id": 7,
+        "question": "O‘pkada limfa tolalari qaysi qismida mavjud?",
+        "answer": "Bronxlar va qon tomirlar atrofida."
+    },
+    {
+        "id": 8,
+        "question": "Bo‘g‘im bo‘shlig‘i mavjud emas qaysi birida?",
+        "answer": "Fibroz bo‘g‘imlarda (masalan, sutura)."
+    },
+    {
+        "id": 9,
+        "question": "Orqa miyaning bo‘y segmentida necha juft nerv chiqadi?",
+        "answer": "8 juft bo‘y nervlari (C1–C8)."
+    },
+    {
+        "id": 10,
+        "question": "To‘sh suyagi bilan to‘g‘ri birikadigan qovurg‘alar soni nechta?",
+        "answer": "7 ta (I–VII haqiqiy qovurg‘alar)."
+    },
+    {
+        "id": 11,
+        "question": "To‘shning bo‘yinturuq o‘ymasi va o‘mrov o‘ymasi qayerda joylashgan?",
+        "answer": "To‘sh suyagining yuqori qismida (manubrium sterni)."
+    },
+    {
+        "id": 12,
+        "question": "MNS (markaziy nerv sistemasi) dan tashqari hujayralar qaysilar?",
+        "answer": "Periferik nerv tizimi hujayralari (masalan, Shvann hujayralari)."
+    },
+    {
+        "id": 13,
+        "question": "Tendonlarning vazifasi nima?",
+        "answer": "Mushakni suyak bilan biriktirib, kuchni uzatish."
+    },
+    {
+        "id": 14,
+        "question": "Fibroz bo‘g‘im berilgan qator qaysi?",
+        "answer": "Sutura, sindesmoz, gomfoz."
+    },
+    {
+        "id": 15,
+        "question": "Umurtqa tanalarini bir-biriga bog‘lovchi tuzilma qaysi?",
+        "answer": "Disci intervertebrales va boylamlar."
+    },
+    {
+        "id": 16,
+        "question": "Operatsiyada vizual ajratish qiyin bo‘lgan asosiy yo‘l qaysi?",
+        "answer": "Limfa tomirlari (metastaz yo‘li sifatida)."
+    },
+    {
+        "id": 17,
+        "question": "Irregular (notekis) suyakka misol keltiring.",
+        "answer": "Umurtqa suyagi yoki chanoq suyagi."
+    }
+]
+
+
+    const allTests5 = [
+    {
+        "id": 1,
+        "question": "Oshqozon devori burmasi nomi",
+        "answer": "Gastric rugae"
+    },
+    {
+        "id": 2,
+        "question": "Qorin devori pardalari",
+        "answer": "Peritoneum parietale"
+    },
+    {
+        "id": 3,
+        "question": "Diafragma usti",
+        "answer": "Cupula diaphragmatica"
+    },
+    {
+        "id": 4,
+        "question": "Fibroz bo‘g‘im",
+        "answer": "Syndesmosis"
+    },
+    {
+        "id": 5,
+        "question": "Spermatik fasyaning tashqi yuzasini nima hosil qiladi",
+        "answer": "Tunica vaginalis parietalis"
+    },
+    {
+        "id": 6,
+        "question": "Yumshoq parda",
+        "answer": "Pia mater"
+    },
+    {
+        "id": 7,
+        "question": "Ensa osti uchburchagining yuqori chegarasini qaysi mushak hosil qiladi",
+        "answer": "Trapezius"
+    },
+    {
+        "id": 8,
+        "question": "7–8–9-qovurgalararo arteriya qaysi qon tomirdan ajraladi",
+        "answer": "A. intercostalis posterior"
+    },
+    {
+        "id": 9,
+        "question": "Qovurgalararo VAN qayerda bo‘ladi",
+        "answer": "Sulcus costae ichida, qovurga ostida"
+    },
+    {
+        "id": 10,
+        "question": "Ensa osti uchburchagining yuqori qismi",
+        "answer": "Trapezius va splenius capitis bilan chegaralangan"
+    },
+    {
+        "id": 11,
+        "question": "Fibroz boylam qaysi joyda bo‘ladi",
+        "answer": "Periosteum ichida, suyaklar orasida"
+    },
+    {
+        "id": 12,
+        "question": "Apendikulyar suyaklarga qaysi suyaklar kirmaydi",
+        "answer": "Os sacrum va os coccygis"
+    },
+    {
+        "id": 13,
+        "question": "Urug‘ suyuqligini nima ishlab chiqaradi",
+        "answer": "Vesicula seminalis"
+    },
+    {
+        "id": 14,
+        "question": "Pilorik sfinktorni qaysi tuzilma boshqaradi",
+        "answer": "Nervus vagus va enterik nerv tarmog‘i"
+    },
+    {
+        "id": 15,
+        "question": "Ensa osti bo‘g‘imi",
+        "answer": "Articulatio atlantooccipitalis"
+    },
+    {
+        "id": 16,
+        "question": "Bo‘yinning C2 sohasidan chiquvchi nerv qayerni innervatsiya qiladi",
+        "answer": "Bo‘yinning orqa va bosh lateral qismlari"
+    },
+    {
+        "id": 17,
+        "question": "Epiploik teshikning chegaralari nechta va qaysi tuzilmalar",
+        "answer": "4 ta: lobus caudatus hepatis, porta hepatis, vena cava inferior, duodenum qismi"
+    },
+    {
+        "id": 18,
+        "question": "Superior vena cavada klapan nomlari",
+        "answer": "Valvula venae cavae superioris"
+    },
+    {
+        "id": 19,
+        "question": "Oldingi qorin sohasi nechta qismga bo‘linadi",
+        "answer": "4 qism: epigastrium, hypogastrium, regio umbilicalis, regio pubica"
+    },
+    {
+        "id": 20,
+        "question": "Anastomozlardan tushadigan qon qayerga ketadi",
+        "answer": "Venae hepaticae va vena porta orqali jigar"
+    },
+    {
+        "id": 21,
+        "question": "Qovurgalararo limfalar qayerga limfa suyuqligini quyadi",
+        "answer": "Ductus thoracicus"
+    },
+    {
+        "id": 22,
+        "question": "Sinovial bog‘im turlariga kirmaydigan bog‘imlar qaysi",
+        "answer": "Syndesmosis, gomphosis"
+    },
+    {
+        "id": 23,
+        "question": "Epiploik teshik qaysi azolarni bog‘laydi",
+        "answer": "O‘n ikki barmoqli ichak va jigar"
+    },
+    {
+        "id": 24,
+        "question": "Kindik burmasini nima hosil qiladi",
+        "answer": "Mesenterium ventrale"
+    },
+    {
+        "id": 25,
+        "question": "Muskullarni suyak yoki tog‘ay bilan biriktiruvchi zich to‘qima nima",
+        "answer": "Tendon"
+    },
+    {
+        "id": 26,
+        "question": "Ko‘ndalang targ‘il mushakka xos bo‘lmagan xususiyat",
+        "answer": "Ichki organlar harakati"
+    },
+    {
+        "id": 27,
+        "question": "Ko‘ndalang teshiklar qaysi umurtqa sohasida bo‘ladi",
+        "answer": "Bo‘yin umurtqalari"
+    },
+    {
+        "id": 28,
+        "question": "Ensa osti bo‘g‘imlari qaysilar",
+        "answer": "Articulatio atlantooccipitalis va articulatio atlantoaxialis"
+    },
+    {
+        "id": 29,
+        "question": "Kalta suyaklar shakli qanday",
+        "answer": "Cuboid yoki irregular"
+    },
+    {
+        "id": 30,
+        "question": "Orqa miya shakli qanday",
+        "answer": "Silindrsimon (cylindrica)"
+    },
+    {
+        "id": 31,
+        "question": "Qizilungach haqida 2 ta savol",
+        "answer": "Shilliq qavati va muskulyar qavati mavjud; torak qismida trakea oldida joylashgan"
+    },
+    {
+        "id": 32,
+        "question": "Aksis (C2) uchun xos xususiyatlar",
+        "answer": "Dens axis, lateral masslar, foramen transversarium"
+    },
+    {
+        "id": 33,
+        "question": "1816-yil Laennec o‘pkani eng yaxshi eshitish mumkin bo‘lgan joyi qayer",
+        "answer": "Auskultatsiya burchagi (angle of auscultation)"
+    },
+    {
+        "id": 34,
+        "question": "Serebrospinal suyuqlik qayerda joylashgan",
+        "answer": "Subarachnoid space"
+    },
+    {
+        "id": 35,
+        "question": "To‘sh bo‘yinturug‘ oynasi va o‘mrov aylanmasi to‘shning qayeriga birikadi",
+        "answer": "Foramen magnum va atlas posterior archiga"
+    },
+    {
+        "id": 36,
+        "question": "Yumshoq parda lotin tilida nima deyiladi",
+        "answer": "Pia mater"
+    },
+    {
+        "id": 37,
+        "question": "Fibrozli bo‘g‘imlarni aniqlang",
+        "answer": "Syndesmosis va gomphosis"
+    },
+    {
+        "id": 38,
+        "question": "Ensaostidagi bo‘g‘imni aniqlang",
+        "answer": "Articulatio atlantooccipitalis va atlantoaxialis"
+    },
+    {
+        "id": 39,
+        "question": "Neyronlar boshqa neyron uchi yoki motor tuzilma bilan birikib aloqa qilishishiga nima deyiladi",
+        "answer": "Motor end plate (neuromuskular junction)"
+    },
+    {
+        "id": 40,
+        "question": "Ko‘ndalang targ‘il mushakka xos bo‘lmagan xususiyatni aniqlang",
+        "answer": "Ichki organlar harakati"
+    },
+    {
+        "id": 41,
+        "question": "Organizmda dastlabki B va T limfotsitlar qayerda hosil bo‘ladi",
+        "answer": "Suyak iligi"
+    },
+    {
+        "id": 42,
+        "question": "Shu B va T limfotsitlar qayerda faqat shakllanadi",
+        "answer": "Timus"
+    },
+    {
+        "id": 43,
+        "question": "Ko‘p bo‘lakli mushakni aniqlang",
+        "answer": "Multifidus"
+    },
+    {
+        "id": 44,
+        "question": "Plevra necha qavatdan tashkil topgan",
+        "answer": "2"
+    },
+    {
+        "id": 45,
+        "question": "To‘sh suyagiga nechta qovurg‘a to‘g‘ridan to‘g‘ri birikadi",
+        "answer": "7"
+    },
+    {
+        "id": 46,
+        "question": "Traxeyani tashqi tomondan nima o‘rab turadi",
+        "answer": "Tunica adventitia"
+    },
+    {
+        "id": 47,
+        "question": "Qorindagi VANni nima hosil qiladi",
+        "answer": "Vena, arteriya, nerv trifecta (VAN)"
+    },
+    {
+        "id": 48,
+        "question": "Bosh va bo‘yин muskullarini qaysi nervlar innervatsiya qiladi",
+        "answer": "Xususiy efferent nervlar"
+    },
+    {
+        "id": 49,
+        "question": "O‘pkaning qaysi qismida limfa tolalari mavjud emas",
+        "answer": "O‘pkaning apikal qismi"
+    },
+    {
+        "id": 50,
+        "question": "Orqa miya bo‘yин segmentidan necha juft nervlar chiqadi",
+        "answer": "8 juft"
+    },
+    {
+        "id": 51,
+        "question": "Majburiy nafas olishda qanday jarayon kechadi",
+        "answer": "Inspiratorik jarayonda diafragma pasayadi, interkostal mushaklar ishga tushadi"
+    },
+    {
+        "id": 52,
+        "question": "Funksional jihatdan ixtiyoriy harakatni boshqaruvchi nervlar qaysi tizimga kiradi",
+        "answer": "Somatik nerv tizimi"
+    },
+    {
+        "id": 53,
+        "question": "Periferik nervlardan chiqadigan nervlar necha juft",
+        "answer": "31 juft"
+    },
+    {
+        "id": 54,
+        "question": "Nafas olish refleksini boshqaruvchi nerv nomi",
+        "answer": "N. phrenicus"
+    },
+    {
+        "id": 55,
+        "question": "Orqa miya shakli qanday",
+        "answer": "Silindrsimon"
+    },
+    {
+        "id": 56,
+        "question": "Umurtqa pog‘onasini yozishga to‘sqinlik qiluvchi tuzilma nima",
+        "answer": "Ligamentum longitudinale posterior"
+    },
+    {
+        "id": 57,
+        "question": "Irregular suyaklarni aniqlang",
+        "answer": "Os sphenoidale, os temporale, os ethmoidale"
+    }
+]
+
+
+    const allTests6 = [
+    {
+        "id": 1,
+        "question": "Oshqozon devori burmasi nomi",
+        "answer": "Gastric rugae"
+    },
+    {
+        "id": 2,
+        "question": "Qorin devori pardalari",
+        "answer": "Peritoneum parietale"
+    },
+    {
+        "id": 3,
+        "question": "Diafragma usti",
+        "answer": "Cupula diaphragmatica"
+    },
+    {
+        "id": 4,
+        "question": "Fibroz bo‘g‘im",
+        "answer": "Syndesmosis"
+    },
+    {
+        "id": 5,
+        "question": "Spermatik fasyaning tashqi yuzasini nima hosil qiladi",
+        "answer": "Tunica vaginalis parietalis"
+    },
+    {
+        "id": 6,
+        "question": "Yumshoq parda",
+        "answer": "Pia mater"
+    },
+    {
+        "id": 7,
+        "question": "Ensa osti uchburchagining yuqori chegarasini qaysi mushak hosil qiladi",
+        "answer": "Trapezius"
+    },
+    {
+        "id": 8,
+        "question": "7–8–9-qovurgalararo arteriya qaysi qon tomirdan ajraladi",
+        "answer": "A. intercostalis posterior"
+    },
+    {
+        "id": 9,
+        "question": "Qovurgalararo VAN qayerda bo‘ladi",
+        "answer": "Sulcus costae ichida, qovurga ostida"
+    },
+    {
+        "id": 10,
+        "question": "Ensa osti uchburchagining yuqori qismi",
+        "answer": "Trapezius va splenius capitis bilan chegaralangan"
+    },
+    {
+        "id": 11,
+        "question": "Fibroz boylam qaysi joyda bo‘ladi",
+        "answer": "Periosteum ichida, suyaklar orasida"
+    },
+    {
+        "id": 12,
+        "question": "Apendikulyar suyaklarga qaysi suyaklar kirmaydi",
+        "answer": "Os sacrum va os coccygis"
+    },
+    {
+        "id": 13,
+        "question": "Urug‘ suyuqligini nima ishlab chiqaradi",
+        "answer": "Vesicula seminalis"
+    },
+    {
+        "id": 14,
+        "question": "Pilorik sfinktorni qaysi tuzilma boshqaradi",
+        "answer": "Nervus vagus va enterik nerv tarmog‘i"
+    },
+    {
+        "id": 15,
+        "question": "Ensa osti bo‘g‘imi",
+        "answer": "Articulatio atlantooccipitalis"
+    },
+    {
+        "id": 16,
+        "question": "Bo‘yinning C2 sohasidan chiquvchi nerv qayerni innervatsiya qiladi",
+        "answer": "Bo‘yinning orqa va bosh lateral qismlari"
+    },
+    {
+        "id": 17,
+        "question": "Epiploik teshikning chegaralari nechta va qaysi tuzilmalar",
+        "answer": "4 ta: lobus caudatus hepatis, porta hepatis, vena cava inferior, duodenum qismi"
+    },
+    {
+        "id": 18,
+        "question": "Superior vena cavada klapan nomlari",
+        "answer": "Valvula venae cavae superioris"
+    },
+    {
+        "id": 19,
+        "question": "Oldingi qorin sohasi nechta qismga bo‘linadi",
+        "answer": "4 qism: epigastrium, hypogastrium, regio umbilicalis, regio pubica"
+    },
+    {
+        "id": 20,
+        "question": "Anastomozlardan tushadigan qon qayerga ketadi",
+        "answer": "Venae hepaticae va vena porta orqali jigar"
+    },
+    {
+        "id": 21,
+        "question": "Qovurgalararo limfalar qayerga limfa suyuqligini quyadi",
+        "answer": "Ductus thoracicus"
+    },
+    {
+        "id": 22,
+        "question": "Sinovial bog‘im turlariga kirmaydigan bog‘imlar qaysi",
+        "answer": "Syndesmosis, gomphosis"
+    },
+    {
+        "id": 23,
+        "question": "Epiploik teshik qaysi azolarni bog‘laydi",
+        "answer": "O‘n ikki barmoqli ichak va jigar"
+    },
+    {
+        "id": 24,
+        "question": "Kindik burmasini nima hosil qiladi",
+        "answer": "Mesenterium ventrale"
+    },
+    {
+        "id": 25,
+        "question": "Muskullarni suyak yoki tog‘ay bilan biriktiruvchi zich to‘qima nima",
+        "answer": "Tendon"
+    },
+    {
+        "id": 26,
+        "question": "Ko‘ndalang targ‘il mushakka xos bo‘lmagan xususiyat",
+        "answer": "Ichki organlar harakati"
+    },
+    {
+        "id": 27,
+        "question": "Ko‘ndalang teshiklar qaysi umurtqa sohasida bo‘ladi",
+        "answer": "Bo‘yin umurtqalari"
+    },
+    {
+        "id": 28,
+        "question": "Ensa osti bo‘g‘imlari qaysilar",
+        "answer": "Articulatio atlantooccipitalis va articulatio atlantoaxialis"
+    },
+    {
+        "id": 29,
+        "question": "Kalta suyaklar shakli qanday",
+        "answer": "Cuboid yoki irregular"
+    },
+    {
+        "id": 30,
+        "question": "Orqa miya shakli qanday",
+        "answer": "Silindrsimon (cylindrica)"
+    },
+    {
+        "id": 31,
+        "question": "Qizilungach haqida 2 ta savol",
+        "answer": "Shilliq qavati va muskulyar qavati mavjud; torak qismida trakea oldida joylashgan"
+    },
+    {
+        "id": 32,
+        "question": "Aksis (C2) uchun xos xususiyatlar",
+        "answer": "Dens axis, lateral masslar, foramen transversarium"
+    },
+    {
+        "id": 33,
+        "question": "1816-yil Laennec o‘pkani eng yaxshi eshitish mumkin bo‘lgan joyi qayer",
+        "answer": "Auskultatsiya burchagi (angle of auscultation)"
+    },
+    {
+        "id": 34,
+        "question": "Serebrospinal suyuqlik qayerda joylashgan",
+        "answer": "Subarachnoid space"
+    },
+    {
+        "id": 35,
+        "question": "To‘sh bo‘yinturug‘ oynasi va o‘mrov aylanmasi to‘shning qayeriga birikadi",
+        "answer": "Foramen magnum va atlas posterior archiga"
+    },
+    {
+        "id": 36,
+        "question": "Yumshoq parda lotin tilida nima deyiladi",
+        "answer": "Pia mater"
+    },
+    {
+        "id": 37,
+        "question": "Fibrozli bo‘g‘imlarni aniqlang",
+        "answer": "Syndesmosis va gomphosis"
+    },
+    {
+        "id": 38,
+        "question": "Ensaostidagi bo‘g‘imni aniqlang",
+        "answer": "Articulatio atlantooccipitalis va atlantoaxialis"
+    },
+    {
+        "id": 39,
+        "question": "Neyronlar boshqa neyron uchi yoki motor tuzilma bilan birikib aloqa qilishishiga nima deyiladi",
+        "answer": "Motor end plate (neuromuskular junction)"
+    },
+    {
+        "id": 40,
+        "question": "Ko‘ndalang targ‘il mushakka xos bo‘lmagan xususiyatni aniqlang",
+        "answer": "Ichki organlar harakati"
+    },
+    {
+        "id": 41,
+        "question": "Organizmda dastlabki B va T limfotsitlar qayerda hosil bo‘ladi",
+        "answer": "Suyak iligi"
+    },
+    {
+        "id": 42,
+        "question": "Shu B va T limfotsitlar qayerda faqat shakllanadi",
+        "answer": "Timus"
+    },
+    {
+        "id": 43,
+        "question": "Ko‘p bo‘lakli mushakni aniqlang",
+        "answer": "Multifidus"
+    },
+    {
+        "id": 44,
+        "question": "Plevra necha qavatdan tashkil topgan",
+        "answer": "2"
+    },
+    {
+        "id": 45,
+        "question": "To‘sh suyagiga nechta qovurg‘a to‘g‘ridan to‘g‘ri birikadi",
+        "answer": "7"
+    },
+    {
+        "id": 46,
+        "question": "Traxeyani tashqi tomondan nima o‘rab turadi",
+        "answer": "Tunica adventitia"
+    },
+    {
+        "id": 47,
+        "question": "Qorindagi VANni nima hosil qiladi",
+        "answer": "Vena, arteriya, nerv trifecta (VAN)"
+    },
+    {
+        "id": 48,
+        "question": "Bosh va bo‘yин muskullarini qaysi nervlar innervatsiya qiladi",
+        "answer": "Xususiy efferent nervlar"
+    },
+    {
+        "id": 49,
+        "question": "O‘pkaning qaysi qismida limfa tolalari mavjud emas",
+        "answer": "O‘pkaning apikal qismi"
+    },
+    {
+        "id": 50,
+        "question": "Orqa miya bo‘yин segmentidan necha juft nervlar chiqadi",
+        "answer": "8 juft"
+    },
+    {
+        "id": 51,
+        "question": "Majburiy nafas olishda qanday jarayon kechadi",
+        "answer": "Inspiratorik jarayonda diafragma pasayadi, interkostal mushaklar ishga tushadi"
+    },
+    {
+        "id": 52,
+        "question": "Funksional jihatdan ixtiyoriy harakatni boshqaruvchi nervlar qaysi tizimga kiradi",
+        "answer": "Somatik nerv tizimi"
+    },
+    {
+        "id": 53,
+        "question": "Periferik nervlardan chiqadigan nervlar necha juft",
+        "answer": "31 juft"
+    },
+    {
+        "id": 54,
+        "question": "Nafas olish refleksini boshqaruvchi nerv nomi",
+        "answer": "N. phrenicus"
     }
 ]
 
@@ -3502,10 +4328,10 @@
     const correctCountEl = document.getElementById('correct-count');
     const wrongCountEl = document.getElementById('wrong-count');
 
-    function buildAllTests2QuizQuestions() {
-        return allTests2.map((item, idx) => {
+    function buildQuizQuestionsFromQa(sourceTests) {
+        return sourceTests.map((item, idx) => {
             const cleanAnswer = item.answer.trim();
-            const wrongPool = allTests2
+            const wrongPool = sourceTests
                 .filter((_, i) => i !== idx)
                 .map((question) => question.answer.trim())
                 .filter((answer) => answer !== cleanAnswer);
@@ -3521,7 +4347,11 @@
         });
     }
 
-    const allTests2QuizQuestions = buildAllTests2QuizQuestions();
+    const allTests2QuizQuestions = buildQuizQuestionsFromQa(allTests2);
+    const allTests3QuizQuestions = buildQuizQuestionsFromQa(allTests3);
+    const allTests4QuizQuestions = buildQuizQuestionsFromQa(allTests4);
+    const allTests5QuizQuestions = buildQuizQuestionsFromQa(allTests5);
+    const allTests6QuizQuestions = buildQuizQuestionsFromQa(allTests6);
 
     // 1. BOSH SAHIFADA BLOKLARNI CHIQARISH
     function initHome() {
@@ -3530,9 +4360,42 @@
 
         blockCatalog = [
             {
-                type: 'allTests2',
+                type: 'qa',
+                title: 'allTests3 bloki',
+                rangeText: `(1-${allTests3QuizQuestions.length})`,
+                questions: allTests3QuizQuestions,
+                isNew: true,
+                wide: false
+            },
+            {
+                type: 'qa',
+                title: 'allTests4 bloki',
+                rangeText: `(1-${allTests4QuizQuestions.length})`,
+                questions: allTests4QuizQuestions,
+                isNew: true,
+                wide: false
+            },
+            {
+                type: 'qa',
+                title: 'allTests5 bloki',
+                rangeText: `(1-${allTests5QuizQuestions.length})`,
+                questions: allTests5QuizQuestions,
+                isNew: true,
+                wide: false
+            },
+            {
+                type: 'qa',
+                title: 'allTests6 bloki',
+                rangeText: `(1-${allTests6QuizQuestions.length})`,
+                questions: allTests6QuizQuestions,
+                isNew: true,
+                wide: false
+            },
+            {
+                type: 'qa',
                 title: 'allTests2 bloki',
                 rangeText: `(1-${allTests2QuizQuestions.length})`,
+                questions: allTests2QuizQuestions,
                 wide: true
             }
         ];
@@ -3551,6 +4414,9 @@
             const blockInfo = blockCatalog[i];
             const btn = document.createElement('button');
             btn.className = 'block-btn';
+            if (blockInfo.isNew) {
+                btn.classList.add('block-btn-new');
+            }
             if (blockInfo.wide) {
                 btn.classList.add('block-btn-wide');
             }
@@ -3570,8 +4436,8 @@
         if (!blockInfo) return;
 
         activeBlockNum = blockIdx;
-        if (blockInfo.type === 'allTests2') {
-            currentBlockQuestions = shuffleArray(allTests2QuizQuestions).map(shuffleQuestionOptions);
+        if (blockInfo.type === 'qa') {
+            currentBlockQuestions = shuffleArray(blockInfo.questions).map(shuffleQuestionOptions);
         } else {
             const start = blockInfo.blockIdx * QUESTIONS_PER_BLOCK;
             const end = start + QUESTIONS_PER_BLOCK;
